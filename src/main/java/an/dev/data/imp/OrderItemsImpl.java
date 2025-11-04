@@ -44,6 +44,7 @@ public class OrderItemsImpl implements OrderItemDao {
 			stmt.setDouble(2, orderitems.price);
 			stmt.setInt(3, orderitems.order_id);
 			stmt.setInt(4, orderitems.product_id);
+			stmt.setInt(5, orderitems.id);
 			stmt.execute();
 		
 		}catch(SQLException e) {
@@ -114,6 +115,29 @@ public class OrderItemsImpl implements OrderItemDao {
 			e.printStackTrace();
 		}
 		// TODO Auto-generated method stub
+		return orderitemsList;
+	}
+
+	@Override
+	public List<OrderItems> findByOrderId(int orderId) {
+		List<OrderItems> orderitemsList = new ArrayList<OrderItems>();
+		String sql = "SELECT * FROM order_items WHERE order_id = ?";
+		try {
+			Connection conn = MySQLDriver.getInstance().getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, orderId);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				int id = rs.getInt("id");
+				int quantity = rs.getInt("quantity");
+				double price = rs.getDouble("price");
+				int order_id  = rs.getInt("order_id");
+				int product_id = rs.getInt("product_id");
+				orderitemsList.add(new OrderItems(id, quantity, price, order_id, product_id));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		return orderitemsList;
 	}
 

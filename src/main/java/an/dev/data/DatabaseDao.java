@@ -3,7 +3,6 @@ package an.dev.data;
 import an.dev.data.dao.*;
 import an.dev.data.driver.MySQLDriver;
 import an.dev.data.imp.*;
-import an.dev.data.model.OrderItems;
 
 public class DatabaseDao {
     private static DatabaseDao instance;

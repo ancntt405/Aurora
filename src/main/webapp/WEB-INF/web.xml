@@ -113,6 +113,26 @@
         <servlet-name>IndexCategoryServlet</servlet-name>
         <servlet-class>an.dev.admin.category.IndexCategoryServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <servlet-class>an.dev.admin.orders.DeleteOrderServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditOrderServlet</servlet-name>
+        <servlet-class>an.dev.admin.orders.EditOrderServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>OrderItemServlet</servlet-name>
+        <servlet-class>an.dev.admin.orders.OrderItemServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexOrderServlet</servlet-name>
+        <servlet-class>an.dev.admin.orders.IndexOrderServlet</servlet-class>
+    </servlet>
     <!-- HomeServlet mapping - chỉ dùng /HomeServlet để tránh xung đột -->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -200,7 +220,25 @@
         <url-pattern>/IndexCategoryServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>DeleteOrderServlet</servlet-name>
+        <url-pattern>/DeleteOrderServlet</url-pattern>
+    </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>EditOrderServlet</servlet-name>
+        <url-pattern>/EditOrderServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>OrderItemServlet</servlet-name>
+        <url-pattern>/OrderItemServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexOrderServlet</servlet-name>
+        <url-pattern>/IndexOrderServlet</url-pattern>
+    </servlet-mapping>
 
     <!-- Let default servlet serve static resources under /assets/* -->
     <servlet-mapping>
