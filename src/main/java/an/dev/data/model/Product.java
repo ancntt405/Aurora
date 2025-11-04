@@ -129,4 +129,19 @@ public class Product {
 	this.created_at = created_at;
 	this.status = status;
 }
+
+    public Product(String name, String image, String description, double price, double price_old, int quantity,
+                   int view, int category_id, Timestamp created_at, Boolean status) {
+        super();
+        this.name = name;
+        this.image = image;
+        this.description = description;
+        this.price = price;
+        this.price_old = price_old;
+        this.quantity = quantity;
+        this.view = view;
+        this.category_id = category_id;
+        this.created_at = created_at;
+        this.status = status;
+    }
 }

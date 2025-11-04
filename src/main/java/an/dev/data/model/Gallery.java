@@ -11,6 +11,12 @@ public class Gallery {
 		this.product_id = product_id;
 	}
 
+	public Gallery(String image_url, int product_id) {
+		super();
+		this.image_url = image_url;
+		this.product_id = product_id;
+	}
+
     public int getProduct_id() {
         return product_id;
     }
