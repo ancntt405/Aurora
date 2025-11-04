@@ -13,6 +13,12 @@ public Banner(int id, String image, String title, Boolean status) {
 	this.status = status;
 }
 
+    public Banner(String safeFileName, String title, boolean status) {
+    super();
+    this.image = safeFileName;
+    this.status = status;
+    }
+
     public int getId() {
         return id;
     }
