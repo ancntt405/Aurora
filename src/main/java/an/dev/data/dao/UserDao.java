@@ -10,5 +10,6 @@ public interface UserDao {
     public User find(String id);
     public User find(String email, String password);
     public User findByEmail(String email);
+    public User findByPhone(String phone);
     public List<User> findAll();
 }

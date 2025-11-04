@@ -26,16 +26,44 @@
                         </div>
                     </div>
                     <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i
-                                    class="fa fa-home me-2"></i>Trang Quản Trị</small></a>
+                        <%
+                          an.dev.data.model.User currentUser = (an.dev.data.model.User) session.getAttribute("user");
+                          boolean isAdmin = (currentUser != null && "admin".equals(currentUser.getRole()));
+                          String displayName = (currentUser != null && currentUser.getName() != null && !currentUser.getName().trim().isEmpty())
+                                  ? currentUser.getName() : (currentUser != null ? currentUser.getEmail() : null);
+                        %>
+                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small>
+                            <i class="fa fa-user me-2"></i>
+                            <%= (displayName != null) ? displayName : "Tài khoản" %>
+                        </small></a>
                         <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> Đăng Nhập</a>
-                            <a href="#" class="dropdown-item"> Danh sách yêu thích</a>
-                            <a href="#" class="dropdown-item"> giỏ hàng của tôi</a>
-                            <a href="#" class="dropdown-item"> Thông báo</a>
-                            <a href="#" class="dropdown-item"> cài đặt tài khoản</a>
-                            <a href="#" class="dropdown-item"> Tài khoản của tôi</a>
-                            <a href="#" class="dropdown-item"> Đăng xuất</a>
+                          <%
+                            if (currentUser == null) {
+                          %>
+                            <a href="${pageContext.request.contextPath}/LoginServlet" class="dropdown-item">Đăng nhập</a>
+                            <a href="${pageContext.request.contextPath}/RegisterServlet" class="dropdown-item">Đăng ký</a>
+                          <%
+                            } else {
+                          %>
+                            <span class="dropdown-item-text"><strong><%= displayName %></strong></span>
+                            <span class="dropdown-item-text text-muted"><%= currentUser.getEmail() %></span>
+                            <div class="dropdown-divider"></div>
+                            <a href="#" class="dropdown-item">Danh sách yêu thích</a>
+                            <a href="#" class="dropdown-item">Giỏ hàng của tôi</a>
+                            <a href="#" class="dropdown-item">Cài đặt tài khoản</a>
+                            <a href="#" class="dropdown-item">Tài khoản của tôi</a>
+                            <%
+                              if (isAdmin) {
+                            %>
+                              <a href="${pageContext.request.contextPath}/DashboardServlet" class="dropdown-item">Trang quản trị</a>
+                            <%
+                              }
+                            %>
+                            <div class="dropdown-divider"></div>
+                            <a href="${pageContext.request.contextPath}/LogoutServlet" class="dropdown-item">Đăng xuất</a>
+                          <%
+                            }
+                          %>
                         </div>
                     </div>
                 </div>
