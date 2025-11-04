@@ -11,7 +11,7 @@ public class DatabaseDao {
     private final CategoryDao categoryDao;
     private final ProductDao productDao;
     private final OrderDao orderDao;
-    private final OrderItems orderItem;
+    private final OrderItemDao orderItem;
     private final UserDao userDao;
     private final BannerDao bannerDao;
     private final GalleryDao galleryDao;
@@ -21,7 +21,7 @@ public class DatabaseDao {
         categoryDao = new CategoryImpl();
         productDao = new productImpl();
         orderDao = new OrderImpl();
-        orderItem = new OrderItems();
+        orderItem = new OrderItemsImpl();
         galleryDao = new GalleryImpl();
         cartDao = new CartImpl();
         userDao = new UserImpl();

@@ -221,5 +221,30 @@ public class UserImpl implements UserDao{
 		}
 		return userList;
 	}
+    @Override
+    public User find(int id) {
+        String sql = "SELECT * FROM users WHERE id = ? LIMIT 1";
+        try (Connection conn = MySQLDriver.getInstance().getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, id);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    String email = rs.getString("email");
+                    String password = rs.getString("password");
+                    String phone = rs.getString("phone");
+                    String address = rs.getString("address");
+                    String image = rs.getString("image");
+                    java.sql.Timestamp created_at = rs.getTimestamp("created_at");
+                    java.sql.Timestamp updated_at = rs.getTimestamp("updated_at");
+                    String role = rs.getString("role");
+                    String name = rs.getString("name");
+                    return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 }

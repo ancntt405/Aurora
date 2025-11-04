@@ -1,0 +1,311 @@
+/* Admin CSS Fix */
+@charset "UTF-8";
+
+/* Fix Font Awesome icons */
+.fa, .fas, .far, .fab, .fal, .fad {
+    font-family: "Font Awesome 5 Free", "Font Awesome 5 Brands", "Font Awesome 5 Pro" !important;
+    font-weight: 900 !important;
+    font-style: normal !important;
+    font-variant: normal !important;
+    text-rendering: auto !important;
+    line-height: 1 !important;
+    -webkit-font-smoothing: antialiased !important;
+    -moz-osx-font-smoothing: grayscale !important;
+}
+
+.fab {
+    font-family: "Font Awesome 5 Brands" !important;
+    font-weight: 400 !important;
+}
+
+.far {
+    font-weight: 400 !important;
+}
+
+.fal {
+    font-weight: 300 !important;
+}
+
+/* Fix icon colors */
+.fa.text-primary {
+    color: #007bff !important;
+}
+
+.fa.text-success {
+    color: #28a745 !important;
+}
+
+.fa.text-warning {
+    color: #ffc107 !important;
+}
+
+.fa.text-danger {
+    color: #dc3545 !important;
+}
+
+.fa.text-info {
+    color: #17a2b8 !important;
+}
+
+.fa.text-secondary {
+    color: #6c757d !important;
+}
+
+.fa.text-white {
+    color: white !important;
+}
+
+.fa.text-dark {
+    color: #333 !important;
+}
+
+/* Global font family for all admin elements (except icons) */
+*:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Fix navbar text encoding and colors */
+.navbar, .navbar *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Force all navbar text to be dark */
+.navbar-dark, .navbar-dark *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    color: #333 !important;
+}
+
+.navbar-light, .navbar-light *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    color: #333 !important;
+}
+
+.navbar input[type="search"] {
+    color: #333 !important;
+    background: rgba(255,255,255,0.9) !important;
+    border: 1px solid #ddd !important;
+}
+
+.navbar input[type="search"]::placeholder {
+    color: #666 !important;
+}
+
+/* Force search input placeholder to be dark */
+.navbar input[type="search"]::-webkit-input-placeholder {
+    color: #666 !important;
+}
+
+.navbar input[type="search"]::-moz-placeholder {
+    color: #666 !important;
+}
+
+.navbar input[type="search"]:-ms-input-placeholder {
+    color: #666 !important;
+}
+
+.navbar input[type="search"]:-moz-placeholder {
+    color: #666 !important;
+}
+
+.navbar .dropdown-menu {
+    background: white !important;
+    border: none !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15) !important;
+}
+
+.navbar .dropdown-item {
+    color: #333 !important;
+}
+
+.navbar .dropdown-item:hover {
+    background: #f8f9fa !important;
+    color: #333 !important;
+}
+
+.navbar .dropdown-header {
+    background: #dc3545 !important;
+    color: white !important;
+}
+
+/* Fix navbar background to be lighter */
+.navbar {
+    background: linear-gradient(135deg, #f8f9fa, #e9ecef) !important;
+    border-bottom: 1px solid #dee2e6 !important;
+}
+
+/* Override Bootstrap navbar classes */
+.navbar .navbar-brand,
+.navbar .navbar-nav .nav-link,
+.navbar .navbar-text,
+.navbar .dropdown-toggle,
+.navbar .dropdown-item,
+.navbar .form-control,
+.navbar .btn,
+.navbar span,
+.navbar div,
+.navbar p,
+.navbar h1, .navbar h2, .navbar h3, .navbar h4, .navbar h5, .navbar h6 {
+    color: #333 !important;
+}
+
+/* Fix specific navbar elements */
+.navbar .d-flex,
+.navbar .align-items-center,
+.navbar .me-3,
+.navbar .text-white-50,
+.navbar .fw-bold,
+.navbar .opacity-75,
+.navbar .opacity-50 {
+    color: #333 !important;
+}
+
+/* Fix sidebar text encoding and colors */
+.sidebar, .sidebar *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+.sidebar .text-white {
+    color: #ffffff !important;
+}
+
+.sidebar .text-light {
+    color: #ffffff !important;
+}
+
+.sidebar .opacity-75 {
+    opacity: 0.75 !important;
+}
+
+.sidebar .opacity-50 {
+    opacity: 0.5 !important;
+}
+
+/* Ensure proper text rendering for all elements */
+.sidebar h4, .sidebar h6, .sidebar span, .sidebar small {
+    color: #ffffff !important;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Fix content area */
+.content, .content *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Fix table text */
+.table, .table *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Fix card text */
+.card, .card *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Fix button text */
+.btn, .btn *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+}
+
+/* Fix form elements */
+.form-control, .form-control *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Fix dropdown text */
+.dropdown-menu, .dropdown-menu *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Force UTF-8 encoding for all text elements */
+h1, h2, h3, h4, h5, h6, p, span, div, a, button, input, textarea, select, label, th, td {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
+    color: #333 !important;
+}
+
+/* Override ALL Bootstrap text color classes in navbar */
+.navbar .text-white,
+.navbar .text-white-50,
+.navbar .text-light,
+.navbar .text-muted,
+.navbar .text-secondary,
+.navbar .text-dark,
+.navbar .text-primary,
+.navbar .text-success,
+.navbar .text-info,
+.navbar .text-warning,
+.navbar .text-danger {
+    color: #333 !important;
+}
+
+/* Override ALL Bootstrap opacity classes in navbar */
+.navbar .opacity-0,
+.navbar .opacity-25,
+.navbar .opacity-50,
+.navbar .opacity-75,
+.navbar .opacity-100 {
+    opacity: 1 !important;
+    color: #333 !important;
+}
+
+/* Force navbar text to be visible */
+.navbar *:not(.fa):not(.fas):not(.far):not(.fab):not(.fal):not(.fad) {
+    color: #333 !important;
+}
+
+/* Fix sidebar styling */
+.sidebar {
+    background: linear-gradient(180deg, #2c3e50 0%, #34495e 100%) !important;
+    min-height: 100vh;
+}
+
+.sidebar .nav-link:hover {
+    background: rgba(220, 53, 69, 0.2) !important;
+    color: #fff !important;
+    transform: translateX(5px);
+}
+
+.sidebar .nav-link.active {
+    background: linear-gradient(135deg, #dc3545, #c82333) !important;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(220, 53, 69, 0.3);
+}
+
+.sidebar .dropdown-menu {
+    background: rgba(44, 62, 80, 0.95) !important;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+.sidebar .dropdown-item:hover {
+    background: rgba(220, 53, 69, 0.2) !important;
+    color: #fff !important;
+}
+
+.sidebar .dropdown-toggle::after {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px;
+        width: 250px;
+        height: 100vh;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+    
+    .sidebar.show {
+        left: 0;
+    }
+    
+    .content {
+        margin-left: 0;
+    }
+}
