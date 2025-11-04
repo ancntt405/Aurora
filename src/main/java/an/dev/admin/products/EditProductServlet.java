@@ -116,7 +116,12 @@ public class EditProductServlet extends BaseAdminServlet {
         boolean status = parseBooleanOrDefault(request.getParameter("status"), product.getStatus());
 
         if (image != null && !image.trim().isEmpty()) {
-            product.setImage(image.trim());
+            String v = image.trim();
+            if (v.startsWith("img/")) v = v.substring(4);
+            if (v.startsWith("assets/images/")) v = v.substring("assets/images/".length());
+            int slash = Math.max(v.lastIndexOf('/'), v.lastIndexOf('\\'));
+            if (slash >= 0 && slash + 1 < v.length()) v = v.substring(slash + 1);
+            product.setImage(v);
         }
         product.setName(name.trim());
         product.setDescription(description.trim());

@@ -63,6 +63,7 @@ public class CreateProductServlet extends BaseAdminServlet {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        image = normalizeImageName(image);
         System.out.println("Saved product image filename = " + image);
         if (name.isEmpty()) {
             session.setAttribute("errorMessage", "Vui lòng nhập tên sản phẩm");
@@ -133,5 +134,19 @@ public class CreateProductServlet extends BaseAdminServlet {
         } catch (Exception e) {
             return new Timestamp(System.currentTimeMillis());
         }
+    }
+
+    // Ensure we only store the filename, not a full or prefixed path
+    private String normalizeImageName(String raw) {
+        if (raw == null) return "";
+        String v = raw.trim();
+        if (v.isEmpty()) return v;
+        // strip context-relative prefixes
+        if (v.startsWith("img/")) v = v.substring(4);
+        if (v.startsWith("assets/images/")) v = v.substring("assets/images/".length());
+        // keep only basename
+        int slash = Math.max(v.lastIndexOf('/'), v.lastIndexOf('\\'));
+        if (slash >= 0 && slash + 1 < v.length()) v = v.substring(slash + 1);
+        return v;
     }
 }

@@ -95,11 +95,11 @@
                                     <th scope="col" style="width: 5%">STT</th>
                                     <th scope="col" style="width: 10%">Hình ảnh</th>
                                     <th scope="col" style="width: 20%">Tên sản phẩm</th>
-                                    <th scope="col" style="width: 20%">Mô tả</th>
+                                    
                                     <th scope="col" style="width: 10%">Giá</th>
                                     <th scope="col" style="width: 10%">Giá cũ</th>
                                     <th scope="col" style="width: 5%">SL</th>
-                                    <th scope="col" style="width: 10%">Danh mục</th>
+                                    <th scope="col" style="width: 15%">Danh mục</th>
                                     <th scope="col" style="width: 20%">Trạng Thái</th>
                                     <th scope="col" style="width: 5%">Sửa</th>
                                     <th scope="col" style="width: 5%">Xóa</th>
@@ -111,9 +111,25 @@
                                     <c:set var="index" value="${index + 1}"/>
                                     <tr>
                                         <td>${index}</td>
-                                        <td><img src="${pageContext.request.contextPath}/img/${product.image}" width="50" height="50" alt="img" class="img-fluid"/></td>
+                                        <td>
+                                          <c:set var="imgVal" value="${product.image}"/>
+                                          <c:set var="imgSrc" value=""/>
+                                          <c:choose>
+                                            <c:when test="${not empty imgVal and fn:startsWith(imgVal, 'http')}">
+                                              <c:set var="imgSrc" value="${imgVal}"/>
+                                            </c:when>
+                                            <c:when test="${not empty imgVal and (fn:startsWith(imgVal, 'img/') or fn:startsWith(imgVal, 'assets/'))}">
+                                              <c:set var="imgSrc" value="${pageContext.request.contextPath}/${imgVal}"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                              <c:set var="imgSrc" value="${pageContext.request.contextPath}/img/${imgVal}"/>
+                                            </c:otherwise>
+                                          </c:choose>
+                                          <img src="${imgSrc}"
+                                               width="50" height="50" alt="img" class="img-fluid"/>
+                                        </td>
                                         <td>${product.name}</td>
-                                        <td>${product.description}</td>
+                                        
                                      <td>
                                         <fmt:formatNumber value="${product.price * 1000}" type="currency" currencySymbol="₫" groupingUsed="true"/>
                                      </td>
@@ -123,7 +139,18 @@
                                          </c:if>
                                      </td>
                                         <td>${product.quantity}</td>
-                                        <td>${product.categoryName}</td>
+                                        <td>
+                                          <c:set var="catName" value=""/>
+                                          <c:forEach items="${categories}" var="cat">
+                                            <c:if test="${cat.id == product.category_id}">
+                                              <c:set var="catName" value="${cat.name}"/>
+                                            </c:if>
+                                          </c:forEach>
+                                          <c:choose>
+                                            <c:when test="${not empty catName}">${catName}</c:when>
+                                            <c:otherwise>${product.category_id}</c:otherwise>
+                                          </c:choose>
+                                        </td>
                                             <td>
                                              <div class="form-check form-switch">
                                                <input class="form-check-input" type="checkbox"

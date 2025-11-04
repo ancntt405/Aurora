@@ -181,7 +181,15 @@
                       symH.setDecimalSeparator(',');
                       java.text.DecimalFormat dfH = new java.text.DecimalFormat("#,##0.##", symH);
                     %>
-                    <img src="<%= (randomprod != null && randomprod.getImage() != null && !randomprod.getImage().isEmpty()) ? (request.getContextPath()+"/img/"+randomprod.getImage()) : (request.getContextPath()+"/img/header-img.jpg") %>"
+                    <%
+                      String rndImgVal = (randomprod != null) ? randomprod.getImage() : null;
+                      String rndImgSrc;
+                      if (rndImgVal != null && rndImgVal.startsWith("http")) rndImgSrc = rndImgVal;
+                      else if (rndImgVal != null && (rndImgVal.startsWith("img/") || rndImgVal.startsWith("assets/"))) rndImgSrc = request.getContextPath()+"/"+rndImgVal;
+                      else rndImgSrc = request.getContextPath()+"/img/"+((rndImgVal != null && !rndImgVal.isEmpty()) ? rndImgVal : "header-img.jpg");
+                    %>
+                    <img src="<%= rndImgSrc %>"
+                         onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/header-img.jpg';"
                          class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Image">
                     <div class="carousel-banner-offer">
                         <p class="bg-primary text-white rounded fs-5 py-2 px-4 mb-0 me-3">
@@ -351,7 +359,14 @@
                                 <div class="product-item rounded wow fadeInUp" data-wow-delay="0.7s">
                                     <div class="product-item-inner border rounded">
                                         <div class="product-item-inner-item">
-                                            <img src="${pageContext.request.contextPath}/img/<%= product.getImage() %>" class="img-fluid w-100 rounded-top" alt="<%= product.getName() %>">
+                                            <%
+                                              String pImgVal = product.getImage();
+                                              String pImgSrc;
+                                              if (pImgVal != null && pImgVal.startsWith("http")) pImgSrc = pImgVal;
+                                              else if (pImgVal != null && (pImgVal.startsWith("img/") || pImgVal.startsWith("assets/"))) pImgSrc = request.getContextPath()+"/"+pImgVal;
+                                              else pImgSrc = request.getContextPath()+"/img/"+pImgVal;
+                                            %>
+                                            <img src="<%= pImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 rounded-top" alt="<%= product.getName() %>">
 
                                             <div class="product-details">
                                                 <a href="#"><i class="fa fa-eye fa-1x"></i></a>
@@ -448,7 +463,14 @@
                     <div class="row g-0">
                       <div class="col-5">
                         <div class="products-mini-img border-end h-100">
-                          <img src="${pageContext.request.contextPath}/img/<%= p.getImage() %>" class="img-fluid w-100 h-100" alt="<%= p.getName() %>">
+                          <%
+                            String apImgVal = p.getImage();
+                            String apImgSrc;
+                            if (apImgVal != null && apImgVal.startsWith("http")) apImgSrc = apImgVal;
+                            else if (apImgVal != null && (apImgVal.startsWith("img/") || apImgVal.startsWith("assets/"))) apImgSrc = request.getContextPath()+"/"+apImgVal;
+                            else apImgSrc = request.getContextPath()+"/img/"+apImgVal;
+                          %>
+                          <img src="<%= apImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 h-100" alt="<%= p.getName() %>">
                           <div class="products-mini-icon rounded-circle bg-primary">
                             <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
                           </div>
@@ -550,7 +572,14 @@
                     <div class="row g-0">
                       <div class="col-5">
                         <div class="products-mini-img border-end h-100">
-                          <img src="${pageContext.request.contextPath}/img/<%= bestsellerProduct.getImage() %>" class="img-fluid w-100 h-100" alt="<%= bestsellerProduct.getName() %>">
+                          <%
+                            String bsImgVal = bestsellerProduct.getImage();
+                            String bsImgSrc;
+                            if (bsImgVal != null && bsImgVal.startsWith("http")) bsImgSrc = bsImgVal;
+                            else if (bsImgVal != null && (bsImgVal.startsWith("img/") || bsImgVal.startsWith("assets/"))) bsImgSrc = request.getContextPath()+"/"+bsImgVal;
+                            else bsImgSrc = request.getContextPath()+"/img/"+bsImgVal;
+                          %>
+                          <img src="<%= bsImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 h-100" alt="<%= bestsellerProduct.getName() %>">
                           <div class="products-mini-icon rounded-circle bg-primary">
                             <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
                           </div>
