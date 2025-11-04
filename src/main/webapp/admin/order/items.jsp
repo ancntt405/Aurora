@@ -82,7 +82,7 @@
                       <td>${i}</td>
                       <td>
                         <c:if test="${not empty it.products.image}">
-                          <img class="thumb" src="${pageContext.request.contextPath}/assets/images/${it.products.image}" alt="${it.products.name}" />
+                          <img class="thumb" src="${pageContext.request.contextPath}/img/${it.products.image}" alt="${it.products.name}" />
                         </c:if>
                       </td>
                       <td>${it.products.name}</td>

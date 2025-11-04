@@ -65,7 +65,7 @@
                                     <div class="border rounded p-3 text-center" style="min-height: 200px; background-color: #f8fff8; border-color: #28a745;">
                                         <c:if test="${not empty product.image}">
                                             <c:set var="imgSrc"
-                                                   value="${fn:startsWith(product.image, 'http') ? product.image : pageContext.request.contextPath.concat('/assets/images/').concat(product.image)}"/>
+                                                   value="${fn:startsWith(product.image, 'http') ? product.image : pageContext.request.contextPath.concat('/img/').concat(product.image)}"/>
                                             <img class="img-fluid rounded shadow-sm" style="max-height:180px; max-width: 100%; object-fit: contain;"
                                                  src="${imgSrc}" alt="Ảnh chính hiện tại"
                                                  onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"/>

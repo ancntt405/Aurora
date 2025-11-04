@@ -10,11 +10,7 @@
     <meta content="" name="description">
 
     <!-- Favicon -->
-   <link rel="apple-touch-icon" sizes="180x180" href="${pageContext.request.contextPath}/assets/images/apple-touch-icon.png">
-       <link rel="icon" type="image/png" sizes="32x32" href="${pageContext.request.contextPath}/assets/images/favicon-32x32.png">
-       <link rel="icon" type="image/png" sizes="16x16" href="${pageContext.request.contextPath}/assets/images/favicon-16x16.png">
-       <link rel="manifest" href="${pageContext.request.contextPath}/assets/images/site.webmanifest">
-       <link rel="shortcut icon" href="${pageContext.request.contextPath}/assets/images/favicon.ico">
+    <link href="${pageContext.request.contextPath}/assets/admin/img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,17 +22,19 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet (CDN) -->
-    <link href="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.8.2/dist/css/tempus-dominus.min.css" rel="stylesheet" />
+    <!-- Libraries Stylesheet -->
+    <link href="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Bootstrap (CDN) -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="${pageContext.request.contextPath}/assets/admin/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Our Admin Theme -->
-    <link href="${pageContext.request.contextPath}/css/admin.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/admin/css/admin-fix.css" rel="stylesheet">
-    
+    <!-- Template Stylesheet -->
+    <link href="${pageContext.request.contextPath}/assets/admin/css/style.css" rel="stylesheet">
+
+    <!-- Admin CSS Fix -->
+    <link href="${pageContext.request.contextPath}/assets/admin/css/admin-fix.css" rel="stylesheet">
+
     <!-- Custom Admin Styles -->
     <style>
         /* Fix layout and encoding issues */
@@ -44,12 +42,12 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif !important;
             background: #f8f9fa;
         }
-        
+
         .content {
             margin-left: 250px;
             transition: margin-left 0.3s ease;
         }
-        
+
         .sidebar {
             position: fixed;
             top: 0;
@@ -59,7 +57,7 @@
             z-index: 1000;
             overflow-y: auto;
         }
-        
+
         /* Fix card styling */
         .card {
             border: none;
@@ -67,12 +65,12 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             transition: transform 0.3s ease;
         }
-        
+
         .card:hover {
             transform: translateY(-2px);
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
         }
-        
+
         /* Fix chart containers */
         .chart-container {
             background: white;
@@ -80,30 +78,30 @@
             padding: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.1);
         }
-        
+
         /* Responsive fixes */
         @media (max-width: 768px) {
             .content {
                 margin-left: 0;
             }
-            
+
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.3s ease;
             }
-            
+
             .sidebar.show {
                 transform: translateX(0);
             }
         }
-        
+
         /* Fix dropdown menu positioning */
         .dropdown-menu {
             border: none;
             box-shadow: 0 4px 20px rgba(0,0,0,0.15);
             border-radius: 8px;
         }
-        
+
         /* Fix navbar positioning */
         .navbar {
             position: sticky;
@@ -399,18 +397,19 @@
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries (CDN) -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery.easing@1.4.1/jquery.easing.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/waypoints@4.0.1/lib/jquery.waypoints.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/owl.carousel@2.3.4/dist/owl.carousel.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/moment@2.29.4/moment.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.8.2/dist/js/tempus-dominus.min.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/chart/chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/easing/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/waypoints/waypoints.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- Our Admin helpers -->
-    <script src="${pageContext.request.contextPath}/js/admin.js"></script>
+    <!-- Template Javascript -->
+    <script src="${pageContext.request.contextPath}/assets/admin/js/main.js"></script>
 </body>
 
 </html>
