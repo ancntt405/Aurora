@@ -11,4 +11,5 @@ public interface OrderItemDao {
     public boolean delete(int id);
     public OrderItems find(int id);
     public List<OrderItems> findAll();
+    public List<OrderItems> findByOrderId(int orderId);
 }

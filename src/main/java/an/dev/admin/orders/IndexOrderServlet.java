@@ -1,4 +1,31 @@
 package an.dev.admin.orders;
 
-public class IndexOrderServlet {
+import an.dev.admin.BaseAdminServlet;
+import an.dev.data.DatabaseDao;
+import an.dev.data.dao.OrderDao;
+import an.dev.data.model.Order;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.List;
+
+public class IndexOrderServlet extends BaseAdminServlet {
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        OrderDao orderDao = DatabaseDao.getInstance().getOrderDao();
+        //tìm 1 danh sách order
+        List<Order> orderList = orderDao.findAll();
+        //set dữ liệu lên
+        request.setAttribute("orderList", orderList);
+        request.getRequestDispatcher("admin/order/index.jsp").forward(request, response);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        doGet(request, response);
+    }
 }
