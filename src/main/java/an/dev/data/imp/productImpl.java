@@ -15,12 +15,12 @@ import an.dev.data.model.Product;
 public class productImpl implements ProductDao {
 
 	@Override
-	public boolean insert(Product product) {
+	public int insert(Product product) {
 		// TODO Auto-generated method stub
 		String sql = "insert into products(name, image, description, price, price_old, quantity, view, category_id, created_at, status) values(?,?,?,?,?,?,?,?,?,?)";
 		try {
 			Connection conn = MySQLDriver.getInstance().getConnection();
-			PreparedStatement stmt = conn.prepareStatement(sql);
+			PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, product.name);
 			stmt.setString(2, product.image);
 			stmt.setString(3, product.description);
@@ -31,13 +31,17 @@ public class productImpl implements ProductDao {
 			stmt.setInt(8, product.category_id);
 			stmt.setTimestamp(9, product.created_at);
 			stmt.setBoolean(10, product.status);
-			stmt.execute();
-			
+			int affected = stmt.executeUpdate();
+			if (affected == 0) return -1;
+			ResultSet keys = stmt.getGeneratedKeys();
+			if (keys.next()) {
+				return keys.getInt(1);
+			}
+			return -1;
 		}catch(SQLException e) {
 			e.printStackTrace();
-			return false;
+			return -1;
 		}
-		return true;
 	}
 
 	@Override
@@ -57,6 +61,7 @@ public class productImpl implements ProductDao {
 			stmt.setInt(8, product.category_id);
 			stmt.setTimestamp(9, product.created_at);
 			stmt.setBoolean(10, product.status);
+			stmt.setInt(11, product.id);
 			stmt.execute();
 		}catch(SQLException e) {
 			e.printStackTrace();
