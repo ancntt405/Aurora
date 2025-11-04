@@ -58,7 +58,7 @@ public class DatabaseDao {
         return orderDao;
     }
 
-    public OrderItems getOrderItem() {
+    public OrderItemDao getOrderItem() {
         return orderItem;
     }
 

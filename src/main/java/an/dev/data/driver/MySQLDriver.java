@@ -6,7 +6,7 @@ import static an.dev.util.Constants.*;
 
 public class MySQLDriver {
    private static MySQLDriver instance;
-   private MySQLDriver() {
+   public MySQLDriver() {
 	   
    }
    public static MySQLDriver getInstance() {
