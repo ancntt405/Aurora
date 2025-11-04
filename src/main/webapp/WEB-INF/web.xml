@@ -93,6 +93,26 @@
         <servlet-name>IndexBannerServlet</servlet-name>
         <servlet-class>an.dev.admin.banners.IndexBannerServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CreateCategoryServlet</servlet-name>
+        <servlet-class>an.dev.admin.category.CreateCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <servlet-class>an.dev.admin.category.DeleteCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditCategoryServlet</servlet-name>
+        <servlet-class>an.dev.admin.category.EditCategoryServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexCategoryServlet</servlet-name>
+        <servlet-class>an.dev.admin.category.IndexCategoryServlet</servlet-class>
+    </servlet>
     <!-- HomeServlet mapping - chỉ dùng /HomeServlet để tránh xung đột -->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -158,6 +178,29 @@
         <servlet-name>IndexBannerServlet</servlet-name>
         <url-pattern>/IndexBannerServlet</url-pattern>
     </servlet-mapping>
+
+
+    <servlet-mapping>
+        <servlet-name>CreateCategoryServlet</servlet-name>
+        <url-pattern>/CreateCategoryServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteCategoryServlet</servlet-name>
+        <url-pattern>/DeleteCategoryServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditCategoryServlet</servlet-name>
+        <url-pattern>/EditCategoryServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexCategoryServlet</servlet-name>
+        <url-pattern>/IndexCategoryServlet</url-pattern>
+    </servlet-mapping>
+
+
 
     <!-- Let default servlet serve static resources under /assets/* -->
     <servlet-mapping>
