@@ -13,6 +13,13 @@ public class Category {
 		this.status = status;
 	}
 
+    public Category(String name, String thumbnail, boolean status) {
+        super();
+        this.name = name;
+        this.thumbnail = thumbnail;
+        this.status = status;
+    }
+
     public int getId() {
         return id;
     }
