@@ -157,22 +157,22 @@
             <div class="col-12 col-lg-5 col-xl-3 wow fadeInRight" data-wow-delay="0.1s">
                 <div class="carousel-header-banner h-100">
                     <%
-                      java.util.List<an.dev.data.model.Product> randomProductsHdr =
+                      java.util.List<an.dev.data.model.Product> randomProducts =
                         (java.util.List<an.dev.data.model.Product>) request.getAttribute("randomProducts");
-                      an.dev.data.model.Product rph = null;
-                      if (randomProductsHdr != null && !randomProductsHdr.isEmpty()) {
-                        rph = randomProductsHdr.get(0);
+                      an.dev.data.model.Product randomprod = null;
+                      if (randomProducts != null && !randomProducts.isEmpty()) {
+                        randomprod = randomProducts.get(0);
                       }
-                      if (rph == null) {
-                        rph = (an.dev.data.model.Product) request.getAttribute("randomProduct");
+                      if (randomprod == null) {
+                        randomprod = (an.dev.data.model.Product) request.getAttribute("randomProduct");
                       }
 
-                      java.util.List<an.dev.data.model.Category> catListHdr =
+                      java.util.List<an.dev.data.model.Category> catListRandom =
                         (java.util.List<an.dev.data.model.Category>) request.getAttribute("categoryList");
-                      java.util.Map<Integer, String> catNameByIdHdr = new java.util.HashMap<>();
-                      if (catListHdr != null) {
-                        for (an.dev.data.model.Category c : catListHdr) {
-                          catNameByIdHdr.put(c.getId(), c.getName());
+                      java.util.Map<Integer, String> catNameByIdRandom = new java.util.HashMap<>();
+                      if (catListRandom != null) {
+                        for (an.dev.data.model.Category c : catListRandom) {
+                          catNameByIdRandom.put(c.getId(), c.getName());
                         }
                       }
 
@@ -181,34 +181,33 @@
                       symH.setDecimalSeparator(',');
                       java.text.DecimalFormat dfH = new java.text.DecimalFormat("#,##0.##", symH);
                     %>
-                    <img src="<%= (rph != null && rph.getImage() != null && !rph.getImage().isEmpty()) ? (request.getContextPath()+"/img/"+rph.getImage()) : ("img/header-img.jpg") %>"
+                    <img src="<%= (randomprod != null && randomprod.getImage() != null && !randomprod.getImage().isEmpty()) ? (request.getContextPath()+"/img/"+randomprod.getImage()) : (request.getContextPath()+"/img/header-img.jpg") %>"
                          class="img-fluid w-100 h-100" style="object-fit: cover;" alt="Image">
                     <div class="carousel-banner-offer">
-                        <p class="bg-primary text-white rounded fs-5 py-2 px-4 mb-0 me-3">Save $48.00</p>
-                        <p class="text-primary fs-5 fw-bold mb-0">Special Offer</p>
+                        <p class="bg-primary text-white rounded fs-5 py-2 px-4 mb-0 me-3">
+                          giảm giá <%= dfH.format(randomprod.getDiscountAmount()) %>đ
+                        </p>
                     </div>
                     <div class="carousel-banner">
                         <div class="carousel-banner-content text-center p-4">
-                            <a href="#" class="d-block mb-2"><%= (rph != null) ? (catNameByIdHdr.getOrDefault(rph.getCategory_id(), "Unknown")) : "SmartPhone" %></a>
-                            <a href="#" class="d-block text-white fs-3"><%= (rph != null) ? rph.getName() : "Apple iPad Mini <br> G2356" %></a>
+                            <a href="#" class="d-block mb-2"><%= (randomprod != null) ? (catNameByIdRandom.getOrDefault(randomprod.getCategory_id(), "Unknown")) : "SmartPhone" %></a>
+                            <a href="#" class="d-block text-white fs-3"><%= (randomprod != null) ? randomprod.getName() : "" %></a>
                             <%
-                              if (rph != null) {
+                              if (randomprod != null) {
                             %>
-                              <del class="me-2 text-white fs-5"><%= dfH.format(rph.getPrice() * 1000) %>đ</del>
-                              <% if (rph.getPrice_old() > 0) { %>
-                                <span class="text-primary fs-5"><%= dfH.format(rph.getPrice_old() * 1000) %> đ</span>
+                              <del class="me-2 text-white fs-5"><%= dfH.format(randomprod.getPrice() * 1000) %>đ</del>
+                              <% if (randomprod.getPrice_old() > 0) { %>
+                                <span class="text-primary fs-5"><%= dfH.format(randomprod.getPrice_old() * 1000) %> đ</span>
                               <% } %>
                             <%
                               } else {
                             %>
-                              <del class="me-2 text-white fs-5">$1,250.00</del>
-                              <span class="text-primary fs-5">$1,050.00</span>
                             <%
                               }
                             %>
                         </div>
                         <a href="#" class="btn btn-primary rounded-pill py-2 px-4"><i
-                                class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
+                                class="fas fa-shopping-cart me-2"></i>Thêm vào giỏ hàng</a>
                     </div>
                 </div>
             </div>
@@ -378,7 +377,7 @@
                                         class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
                                         <a href="#"
                                             class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i
-                                                class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
+                                                class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <i class="fas fa-star text-primary"></i>
@@ -468,7 +467,7 @@
                     </div>
                     <div class="products-mini-add border p-3">
                       <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                          class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
+                          class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
                       <div class="d-flex">
                         <a href="#"
                            class="text-primary d-flex align-items-center justify-content-center me-3"><span
@@ -506,16 +505,27 @@
             </div>
             <div class="row g-4">
                 <%
-                  java.util.List<an.dev.data.model.Product> randomProducts =
+                  java.util.List<an.dev.data.model.Product> bestsellerProductsFromRequest =
                     (java.util.List<an.dev.data.model.Product>) request.getAttribute("randomProducts");
-                  if (randomProducts == null || randomProducts.isEmpty()) {
-                    java.util.List<an.dev.data.model.Product> fallbackAll =
-                      (java.util.List<an.dev.data.model.Product>) request.getAttribute("productList");
-                    if (fallbackAll != null && !fallbackAll.isEmpty()) {
-                      java.util.List<an.dev.data.model.Product> tmp = new java.util.ArrayList<>(fallbackAll);
-                      int limit6 = Math.min(6, tmp.size());
-                      randomProducts = tmp.subList(0, limit6);
+                  java.util.List<an.dev.data.model.Product> allAvailableProducts =
+                    (java.util.List<an.dev.data.model.Product>) request.getAttribute("productList");
+
+                  java.util.List<an.dev.data.model.Product> sixBestsellerProducts = new java.util.ArrayList<>();
+                  if (bestsellerProductsFromRequest != null && !bestsellerProductsFromRequest.isEmpty()) {
+                    sixBestsellerProducts.addAll(bestsellerProductsFromRequest);
+                  }
+                  if (sixBestsellerProducts.size() < 6 && allAvailableProducts != null && !allAvailableProducts.isEmpty()) {
+                    java.util.List<an.dev.data.model.Product> shuffledAllProducts = new java.util.ArrayList<>(allAvailableProducts);
+                    java.util.Collections.shuffle(shuffledAllProducts);
+                    for (an.dev.data.model.Product candidateProduct : shuffledAllProducts) {
+                      if (sixBestsellerProducts.size() >= 6) break;
+                      if (!sixBestsellerProducts.contains(candidateProduct)) {
+                        sixBestsellerProducts.add(candidateProduct);
+                      }
                     }
+                  }
+                  if (sixBestsellerProducts.size() > 6) {
+                    sixBestsellerProducts = sixBestsellerProducts.subList(0, 6);
                   }
 
                   java.util.List<an.dev.data.model.Category> catListBest =
@@ -532,15 +542,15 @@
                   symbolsBest.setDecimalSeparator(',');
                   java.text.DecimalFormat dfBest = new java.text.DecimalFormat("#,##0.##", symbolsBest);
 
-                  if (randomProducts != null && !randomProducts.isEmpty()) {
-                    for (an.dev.data.model.Product rp : randomProducts) {
+                  if (sixBestsellerProducts != null && !sixBestsellerProducts.isEmpty()) {
+                    for (an.dev.data.model.Product bestsellerProduct : sixBestsellerProducts) {
                 %>
                 <div class="col-md-6 col-lg-6 col-xl-4 wow fadeInUp" data-wow-delay="0.3s">
                   <div class="products-mini-item border">
                     <div class="row g-0">
                       <div class="col-5">
                         <div class="products-mini-img border-end h-100">
-                          <img src="${pageContext.request.contextPath}/img/<%= rp.getImage() %>" class="img-fluid w-100 h-100" alt="<%= rp.getName() %>">
+                          <img src="${pageContext.request.contextPath}/img/<%= bestsellerProduct.getImage() %>" class="img-fluid w-100 h-100" alt="<%= bestsellerProduct.getName() %>">
                           <div class="products-mini-icon rounded-circle bg-primary">
                             <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
                           </div>
@@ -548,17 +558,17 @@
                       </div>
                       <div class="col-7">
                         <div class="products-mini-content p-3">
-                          <a href="#" class="d-block mb-2"><%= catNameByIdBest.containsKey(rp.getCategory_id()) ? catNameByIdBest.get(rp.getCategory_id()) : "Unknown" %></a>
-                          <a href="#" class="d-block h4"><%= rp.getName() %></a>
-                          <del class="me-2 fs-5"><%= dfBest.format(rp.getPrice() * 1000) %>đ</del>
-                          <% if (rp.getPrice_old() > 0) { %>
-                          <span class="text-primary fs-5"><%= dfBest.format(rp.getPrice_old() * 1000) %> đ</span>
+                          <a href="#" class="d-block mb-2"><%= catNameByIdBest.containsKey(bestsellerProduct.getCategory_id()) ? catNameByIdBest.get(bestsellerProduct.getCategory_id()) : "Unknown" %></a>
+                          <a href="#" class="d-block h4"><%= bestsellerProduct.getName() %></a>
+                          <del class="me-2 fs-5"><%= dfBest.format(bestsellerProduct.getPrice() * 1000) %>đ</del>
+                          <% if (bestsellerProduct.getPrice_old() > 0) { %>
+                          <span class="text-primary fs-5"><%= dfBest.format(bestsellerProduct.getPrice_old() * 1000) %> đ</span>
                           <% } %>
                         </div>
                       </div>
                     </div>
                     <div class="products-mini-add border p-3">
-                      <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Add To Cart</a>
+                      <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
                       <div class="d-flex">
                         <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></i></a>
                         <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0"><span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
@@ -588,16 +598,12 @@
             <div class="row g-4 align-items-center">
                 <div class="col-md-6 text-center text-md-start mb-md-0">
                     <span class="text-white"><a href="#" class="border-bottom text-white"><i
-                                class="fas fa-copyright text-light me-2"></i>Your Site Name</a>, All right
+                                class="fas fa-copyright text-light me-2"></i></a>All right
                         reserved.</span>
                 </div>
                 <div class="col-md-6 text-center text-md-end text-white">
+                    Thiết kế bởi <a class="border-bottom text-white" href="https://htmlcodex.com">Lê Hồng Ân</a>.
 
-                    <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
-                    <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
-                    <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
-                    Designed By <a class="border-bottom text-white" href="https://htmlcodex.com">HTML Codex</a>.
-                    Distributed By <a class="border-bottom text-white" href="https://themewagon.com">ThemeWagon</a>
                 </div>
             </div>
         </div>

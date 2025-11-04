@@ -1,5 +1,6 @@
 package an.dev.data.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class Product {
@@ -101,6 +102,16 @@ public class Product {
 
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    public BigDecimal getDiscountAmount() {
+        if (price_old <= 0 || price_old <= price) return BigDecimal.ZERO;
+        return BigDecimal.valueOf(price_old - price).multiply(BigDecimal.valueOf(1000));
+    }
+    public int getDiscountPercent() {
+        if (price_old <= 0 || price_old <= price) return 0;
+        double pct = (1.0 - (double) price / (double) price_old) * 100.0;
+        return (int) Math.round(pct);
     }
 
     public Product(int id, String name, String image, String description, double price, double price_old, int quantity,
