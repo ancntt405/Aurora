@@ -17,7 +17,7 @@ public class IndexProductsServlet extends BaseAdminServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         List<Product> productsList = DatabaseDao.getInstance().getProductDao().findAll();
-        session.setAttribute("productsList", productsList);
+        request.setAttribute("productsList", productsList);
         request.getRequestDispatcher("admin/products/index.jsp").forward(request, response);
     }
 

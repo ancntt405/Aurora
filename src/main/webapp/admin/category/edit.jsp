@@ -67,7 +67,7 @@
                                 <c:if test="${not empty category.thumbnail}">
                                     <div class="mt-3">
                                         <p>Ảnh hiện tại:</p>
-                                        <img src="${pageContext.request.contextPath}/assets/images/${category.thumbnail}"
+                                        <img src="${pageContext.request.contextPath}/img/${category.thumbnail}"
                                              alt="Thumbnail" style="max-width:200px; border:1px solid #ccc;">
                                     </div>
                                 </c:if>

@@ -65,18 +65,18 @@
                     margin-left: 0.5rem;
                 }
 </style>
-<body>
-    <div class="container-xxl position-relative bg-white d-flex p-0">
-
-        <!-- Sidebar Start -->
+<body id="page-top">
+    <div id="wrapper">
+        <!-- Sidebar -->
         <%@include file="../inc/sidebar.jsp"%>
-        <!-- Sidebar End -->
+        <!-- End of Sidebar -->
 
-        <!-- Content Start -->
-        <div class="content" style="margin-left: 250px; width: calc(100% - 250px);">
-            <!-- Navbar Start -->
-            <%@include file="../inc/navbar.jsp" %>
-            <!-- Navbar End -->
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <!-- Topbar -->
+                <%@include file="../inc/navbar.jsp" %>
+                <!-- End of Topbar -->
 
             <!-- Products Start -->
             <div class="container-fluid pt-4 px-4">
@@ -111,7 +111,7 @@
                                     <c:set var="index" value="${index + 1}"/>
                                     <tr>
                                         <td>${index}</td>
-                                        <td><img src="assets/images/${product.image}" width="50" height="50" alt="img" class="img-fluid"/></td>
+                                        <td><img src="${pageContext.request.contextPath}/img/${product.image}" width="50" height="50" alt="img" class="img-fluid"/></td>
                                         <td>${product.name}</td>
                                         <td>${product.description}</td>
                                      <td>
@@ -145,38 +145,29 @@
             </div>
             <!-- Products End -->
 
-            <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-light rounded-top p-4">
-                    <div class="row">
-                        <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Shop</a>, All Right Reserved.
-                        </div>
-                        <div class="col-12 col-sm-6 text-center text-sm-end">
-                            Designed By <a href="#">Shop Admin</a>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <!-- Footer End -->
+            <!-- Footer -->
+            <%@include file="../inc/footer.jsp" %>
+            <!-- End of Footer -->
         </div>
-        <!-- Content End -->
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+        <!-- End of Content Wrapper -->
     </div>
-  <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-                        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/chart/chart.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/easing/easing.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/waypoints/waypoints.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/owl.carousel.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
-                        <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- End of Page Wrapper -->
 
-                        <!-- Template Javascript -->
-                        <script src="${pageContext.request.contextPath}/assets/admin/js/main.js"></script>
+    <!-- Back to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top"><i class="fas fa-angle-up"></i></a>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/chart/chart.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/easing/easing.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/waypoints/waypoints.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    <!-- Template Javascript -->
+    <script src="${pageContext.request.contextPath}/assets/admin/js/main.js"></script>
 </body>
 </html>

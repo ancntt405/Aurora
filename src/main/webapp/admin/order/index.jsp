@@ -23,7 +23,7 @@
             <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
             <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-            <!-- Libraries Stylesheet -->
+            <!-- Libraries Stylesheet (assets) -->
             <link href="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
             <link href="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
@@ -38,9 +38,10 @@
 
                     <style>
                       /* Ensure content area is not under the fixed sidebar */
-                      #content-wrapper { margin-left: 250px; padding: 20px; }
+                      #content { margin-left: 250px; width: calc(100% - 250px); }
+                      .container-fluid { padding: 20px; }
                       @media (max-width: 991.98px) { /* Bootstrap lg breakpoint */
-                        #content-wrapper { margin-left: 0; }
+                        #content { margin-left: 0; width: 100%; }
                       }
                     </style>
     </head>
@@ -53,14 +54,19 @@
             <!-- Content Wrapper -->
             <div id="content-wrapper" class="d-flex flex-column">
                 <!-- Main Content -->
+                <div id="content">
                  <!-- Topbar -->
                     <%@include file="../inc/navbar.jsp" %>
                     <!-- End of Topbar -->
                 <!-- Begin Page Content -->
-                <div class="container-fluid">
+                <div class="container-fluid" style="margin-left: 0; padding-left: 15px;">
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Order</h1>
-                    <p class="mb-4">Danh sách các đơn hàng</p>
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                      <div>
+                        <h1 class="h3 mb-1 text-gray-800">Order</h1>
+                        <p class="mb-0 text-muted">Danh sách các đơn hàng</p>
+                      </div>
+                    </div>
                     <!-- DataTales Example -->
                     <form action="IndexOrderServlet" method="post" class="card shadow mb-4">
                         <div class="card-header py-3">
@@ -116,6 +122,7 @@
                 </div>
                 <!-- /.container-fluid -->
                 <!-- End of Main Content -->
+                </div>
                 <!-- Footer -->
                 <%@include file="../inc/footer.jsp" %>
                 <!-- End of Footer -->
@@ -127,17 +134,16 @@
         <a class="scroll-to-top rounded" href="#page-top">
             <i class="fas fa-angle-up"></i>
         </a>
-       <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-                   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/chart/chart.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/easing/easing.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/waypoints/waypoints.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/owl.carousel.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
-                   <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
-
-                   <!-- Template Javascript -->
-                   <script src="${pageContext.request.contextPath}/assets/admin/js/main.js"></script>
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/chart/chart.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/easing/easing.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/waypoints/waypoints.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/owl.carousel.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/moment-timezone.min.js"></script>
+      <script src="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+      <!-- Template Javascript -->
+      <script src="${pageContext.request.contextPath}/assets/admin/js/main.js"></script>
     </body>
 </html>

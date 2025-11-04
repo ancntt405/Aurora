@@ -19,13 +19,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <!-- Libraries -->
-    <link href="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+      <link href="${pageContext.request.contextPath}/assets/admin/lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/assets/admin/lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Bootstrap & Template -->
-    <link href="${pageContext.request.contextPath}/assets/admin/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/admin/css/style.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/assets/admin/css/admin-fix.css" rel="stylesheet">
+      <!-- Bootstrap & Template -->
+      <link href="${pageContext.request.contextPath}/assets/admin/css/bootstrap.min.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/assets/admin/css/style.css" rel="stylesheet">
+      <link href="${pageContext.request.contextPath}/assets/admin/css/admin-fix.css" rel="stylesheet">
+
 
     <style>
         #content { margin-left: 250px; width: calc(100% - 250px); }
@@ -90,7 +91,7 @@
                                 <label class="form-label">Ảnh hiện tại</label>
                                 <div>
                                     <img class="banner-preview"
-                                         src="${pageContext.request.contextPath}/assets/images/${banner.image}"
+                                         src="${pageContext.request.contextPath}/img/${banner.image}"
                                          alt="${banner.title}">
                                 </div>
                             </div>
@@ -105,7 +106,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <img id="preview" class="banner-preview"
-                                             src="${pageContext.request.contextPath}/assets/images/${banner.image}"
+                                             src="${pageContext.request.contextPath}/img/${banner.image}"
                                              alt="Preview">
                                     </div>
                                 </div>
