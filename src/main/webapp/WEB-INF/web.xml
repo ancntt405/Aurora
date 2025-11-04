@@ -48,6 +48,31 @@
         <servlet-name>RegisterServlet</servlet-name>
         <servlet-class>an.dev.RegisterServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>DashboardServlet</servlet-name>
+        <servlet-class>an.dev.admin.DashboardServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CreateUserServlet</servlet-name>
+        <servlet-class>an.dev.admin.user.CreateUserServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <servlet-class>an.dev.admin.user.DeleteUserServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditUserServlet</servlet-name>
+        <servlet-class>an.dev.admin.user.EditUserServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexUserServlet</servlet-name>
+        <servlet-class>an.dev.admin.user.IndexUserServlet</servlet-class>
+    </servlet>
     <!-- HomeServlet mapping - chỉ dùng /HomeServlet để tránh xung đột -->
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -66,6 +91,31 @@
     <servlet-mapping>
         <servlet-name>RegisterServlet</servlet-name>
         <url-pattern>/RegisterServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DashboardServlet</servlet-name>
+        <url-pattern>/DashboardServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateUserServlet</servlet-name>
+        <url-pattern>/CreateUserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteUserServlet</servlet-name>
+        <url-pattern>/DeleteUserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditUserServlet</servlet-name>
+        <url-pattern>/EditUserServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexUserServlet</servlet-name>
+        <url-pattern>/IndexUserServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Let default servlet serve static resources under /assets/* -->

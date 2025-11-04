@@ -120,4 +120,9 @@ public class OrderImpl implements OrderDao {
 		return orderList;
 	}
 
+    @Override
+    public boolean hasOrdersByUserId(int userId) {
+        return false;
+    }
+
 }
