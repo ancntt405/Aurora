@@ -81,13 +81,13 @@ public class UserImpl implements UserDao{
 	}
 
 	@Override
-	public User find(int id) {
+	public User find(String id) {
 		// TODO Auto-generated method stub
 		String sql = "SELECT * FROM users WHERE id = ?";
 		try {
 			Connection conn = MySQLDriver.getInstance().getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setInt(1, id);
+			stmt.setString(1, id);
 			ResultSet rs = stmt.executeQuery();
 			while(rs.next()) {
 				String email = rs.getString("email");
@@ -99,10 +99,60 @@ public class UserImpl implements UserDao{
 				Timestamp updated_at = rs.getTimestamp("updated_at");
 				String role = rs.getString("role");
 				String name = rs.getString("name");
-				return new User(id, email, password, phone, address, image, created_at, updated_at, role, name);
+				return new User(email, password, phone, address, image, created_at, updated_at, role, name);
 			}
 			
 		}catch(SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public User find(String email, String password) {
+		String sql = "SELECT * FROM users WHERE email = ? AND password = ? LIMIT 1";
+		try {
+			Connection conn = MySQLDriver.getInstance().getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			stmt.setString(2, password);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String phone = rs.getString("phone");
+				String address = rs.getString("address");
+				String image = rs.getString("image");
+				Timestamp created_at = rs.getTimestamp("created_at");
+				Timestamp updated_at = rs.getTimestamp("updated_at");
+				String role = rs.getString("role");
+				String name = rs.getString("name");
+				return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public User findByEmail(String email) {
+		String sql = "SELECT * FROM users WHERE email = ? LIMIT 1";
+		try {
+			Connection conn = MySQLDriver.getInstance().getConnection();
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			if (rs.next()) {
+				String password = rs.getString("password");
+				String phone = rs.getString("phone");
+				String address = rs.getString("address");
+				String image = rs.getString("image");
+				Timestamp created_at = rs.getTimestamp("created_at");
+				Timestamp updated_at = rs.getTimestamp("updated_at");
+				String role = rs.getString("role");
+				String name = rs.getString("name");
+				return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+			}
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return null;
@@ -128,7 +178,7 @@ public class UserImpl implements UserDao{
 				Timestamp updated_at = rs.getTimestamp("updated_at");
 				String role = rs.getString("role");
 				String name = rs.getString("name");
-				userList.add(new User(id, email, password, phone, address, image, created_at, updated_at, role, name));
+				userList.add(new User(email, password, phone, address, image, created_at, updated_at, role, name));
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();

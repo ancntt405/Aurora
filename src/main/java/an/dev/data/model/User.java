@@ -14,6 +14,13 @@ public class User {
    public String role;
    public String name;
 
+    public User(String email, String hashedPassword, String role) {
+        super();
+        this.email = email;
+        this.password = hashedPassword;
+        this.role = role;
+    }
+
     public int getId() {
         return id;
     }
@@ -94,7 +101,7 @@ public class User {
         this.name = name;
     }
 
-    public User(int id, String email, String password, String phone, String address, String image, Timestamp created_at,
+    public User(String email, String password, String phone, String address, String image, Timestamp created_at,
                 Timestamp updated_at, String role, String name) {
 	super();
 	this.id = id;
