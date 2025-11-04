@@ -7,5 +7,5 @@ public class Constants {
 
     public static final int PER_PAGE = 12;
     public static final int NUMBER_DAY = 20;
-    public static final String UPLOAD_DIR = "assets/images";
+    public static final String UPLOAD_DIR = "img";
 }
