@@ -14,4 +14,8 @@ public class OrderItems {
 		this.order_id = order_id;
 		this.product_id = product_id;
 	}
+
+    public OrderItems() {
+        super();
+    }
 }

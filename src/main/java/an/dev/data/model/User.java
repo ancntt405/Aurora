@@ -27,4 +27,12 @@ public User(int id, String email, String password, String phone, String address,
 	this.role = role;
 	this.name = name;
 }
+
+    public User(int id, String email, String hashedPassword, String role) {
+    super();;
+    this.id = id;
+    this.email = email;
+    this.password = hashedPassword;
+    this.role = role;
+    }
 }
