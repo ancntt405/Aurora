@@ -83,38 +83,48 @@
             </div>
             <div class="col-md-4 col-lg-6 text-center">
                 <div class="position-relative ps-4">
-                    <div class="d-flex border rounded-pill">
-                        <input class="form-control border-0 rounded-pill w-100 py-3" type="text"
-                            data-bs-target="#dropdownToggle123" placeholder="Bạn cần tìm kiếm gì trong hôm nay?">
-                        <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
-                            <option value="All Category">Tất cả danh mục</option>
+                    <form class="d-flex border rounded-pill w-100" method="get" action="${pageContext.request.contextPath}/SearchServlet">
+                        <input class="form-control border-0 rounded-pill w-100 py-3" type="search" name="q"
+                               placeholder="Bạn cần tìm kiếm gì trong hôm nay?" value="${param.q}">
+                        <select class="form-select text-dark border-0 border-start rounded-0 p-3" name="categoryId" style="width: 200px;">
+                            <option value="">Tất cả danh mục</option>
                               <%
                               java.util.List<an.dev.data.model.Category> categoryList =
                               (java.util.List<an.dev.data.model.Category>) request.getAttribute("categoryList");
                                int printed = 0;
                                if (categoryList != null) {
                                for (an.dev.data.model.Category cat : categoryList) {
-                                  if (printed >= 10) break; // lấy 5 danh mục
+                                  if (printed >= 10) break; // lấy 10 danh mục
                                %>
-                            <option value="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= cat.id %>"><%= cat.name %></option>
+                            <option value="<%= cat.id %>" <%= String.valueOf(cat.id).equals(request.getParameter("categoryId")) ? "selected" : "" %>><%= cat.name %></option>
                              <%
                                 printed++;
                                 }
                                 }
                               %>
                         </select>
-                        <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i
-                                class="fas fa-search"></i></button>
-                    </div>
+                        <button type="submit" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </form>
                 </div>
             </div>
             <div class="col-md-4 col-lg-3 text-center text-lg-end">
                 <div class="d-inline-flex align-items-center">
                     <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></a>
-                    <a href="${pageContext.request.contextPath}/CartServlet" class="text-muted d-flex align-items-center justify-content-center"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
-                        <span class="text-dark ms-2">$0.00</span></a>
+                            class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></span></a>
+                    <a href="${pageContext.request.contextPath}/CartServlet" class="text-muted d-flex align-items-center justify-content-center position-relative">
+                        <span class="rounded-circle btn-md-square border position-relative">
+                            <i class="fas fa-shopping-cart"></i>
+                            <c:set var="cartQty" value="${sessionScope.totalQuantity}" />
+                            <c:if test="${cartQty > 0}">
+                              <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 10px;">
+                                ${cartQty}
+                              </span>
+                            </c:if>
+                        </span>
+                        <span class="text-dark ms-2">Giỏ hàng</span>
+                    </a>
                 </div>
             </div>
         </div>

@@ -70,15 +70,21 @@ public class EditCategoryServlet extends BaseAdminServlet {
             String fileName = null;
             if (filePart != null && filePart.getSize() > 0) {
                 fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
-                // Thư mục lưu ảnh (assets/images)
-                String uploadPath = request.getServletContext().getRealPath("")
-                        + File.separator + "assets" + File.separator + "images";
+                // Thư mục lưu ảnh mới: /img/categories
+                String uploadPath = request.getServletContext().getRealPath("/img/categories/");
                 File uploadDir = new File(uploadPath);
                 if (!uploadDir.exists()) uploadDir.mkdirs();
+                // Tạo tên duy nhất để tránh ghi đè/lock
+                String base = fileName;
+                String baseName = base;
+                String ext = "";
+                int dot = base.lastIndexOf('.');
+                if (dot > 0) { baseName = base.substring(0, dot); ext = base.substring(dot); }
+                String unique = baseName + "_" + System.currentTimeMillis() + ext;
                 // Lưu file mới
-                filePart.write(uploadPath + File.separator + fileName);
-                // Cập nhật DB với ảnh mới
-                category.setThumbnail(fileName);
+                filePart.write(uploadPath + File.separator + unique);
+                // Cập nhật DB với đường dẫn con phù hợp JSP
+                category.setThumbnail("categories/" + unique);
             }
             // Giữ ảnh cũ nếu không upload mới
             category.setName(name.trim());

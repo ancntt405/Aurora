@@ -14,9 +14,10 @@ public Banner(int id, String image, String title, Boolean status) {
 }
 
     public Banner(String safeFileName, String title, boolean status) {
-    super();
-    this.image = safeFileName;
-    this.status = status;
+        super();
+        this.image = safeFileName;
+        this.title = title;
+        this.status = status;
     }
 
     public int getId() {

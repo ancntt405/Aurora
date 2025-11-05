@@ -151,7 +151,7 @@
                          %>
                             <li>
                                 <div class="categories-item">
-                                    <a href="<%= request.getContextPath() %>/HomeServlet?categoryId=<%= cat.getId() %>" class="text-dark"><i class="fas fa-apple-alt text-secondary me-2"></i><%= cat.getName() %></a>
+                                    <a href="<%= request.getContextPath() %>/ShopServlet?categoryId=<%= cat.getId() %>" class="text-dark"><i class="fas fa-apple-alt text-secondary me-2"></i><%= cat.getName() %></a>
                                 </div>
                             </li>
 
@@ -238,7 +238,7 @@
                          int count = 0;
                          if (bannerList != null) {
                          for (an.dev.data.model.Banner banner : bannerList) {
-                         if (count >= 3) break;
+                         if (count >= 10) break;
                          %>
                             <div class="position-relative">
                                 <img src="${pageContext.request.contextPath}/img/<%= banner.getImage() %>" class="img-fluid rounded w-100" style="height: 250px;" alt="<%= banner.getTitle() %>">
@@ -253,12 +253,28 @@
                     </div>
                     <div class="row g-4">
                         <div class="col-xl-7">
-                            <div class="input-group w-100 mx-auto d-flex">
-                                <input type="search" class="form-control p-3" placeholder="Tìm kiếm"
-                                    aria-describedby="search-icon-1">
-                                <span id="search-icon-1" class="input-group-text p-3"><i
-                                        class="fa fa-search"></i></span>
-                            </div>
+                            <form class="input-group w-100 mx-auto d-flex" method="get" action="<%= request.getContextPath() %>/ShopServlet">
+                                <%
+                                  String keepCatSearch = request.getParameter("categoryId");
+                                  Object keepPmObjSearch = request.getAttribute("priceMax");
+                                  String keepPmSearch = keepPmObjSearch != null ? keepPmObjSearch.toString() : request.getParameter("priceMax");
+                                  String keepSortSearch = (String) request.getAttribute("sort");
+                                  String qValSearch = request.getParameter("q");
+                                %>
+                                <% if (keepCatSearch != null && !keepCatSearch.isEmpty()) { %>
+                                  <input type="hidden" name="categoryId" value="<%= keepCatSearch %>">
+                                <% } %>
+                                <% if (keepPmSearch != null && !keepPmSearch.isEmpty()) { %>
+                                  <input type="hidden" name="priceMax" value="<%= keepPmSearch %>">
+                                <% } %>
+                                <% if (keepSortSearch != null && !keepSortSearch.isEmpty()) { %>
+                                  <input type="hidden" name="sort" value="<%= keepSortSearch %>">
+                                <% } %>
+                                <input type="search" name="q" class="form-control p-3" placeholder="Tìm kiếm" value="<%= qValSearch != null ? qValSearch : "" %>"
+                                       aria-describedby="search-icon-1">
+                                <button id="search-icon-1" class="input-group-text p-3 btn btn-light" type="submit"><i
+                                        class="fa fa-search"></i></button>
+                            </form>
                         </div>
                         <div class="col-xl-3 text-end">
                             <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between">
@@ -335,7 +351,7 @@
                                                 %>
                                                 <img src="<%= imgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 rounded-top" alt="<%= p.getName() %>">
                                                 <div class="product-details">
-                                                    <a href="#"><i class="fa fa-eye fa-1x"></i></a>
+                                                    <a href="<%= request.getContextPath() %>/DetailServlet?productId=<%= p.getId() %>"><i class="fa fa-eye fa-1x"></i></a>
                                                 </div>
                                             </div>
                                             <div class="text-center rounded-bottom p-4">
@@ -348,7 +364,13 @@
                                             </div>
                                         </div>
                                         <div class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
-                                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
+                                            <form method="post" action="<%= request.getContextPath() %>/CartServlet" class="d-inline">
+                                              <input type="hidden" name="action" value="add">
+                                              <input type="hidden" name="productId" value="<%= p.getId() %>">
+                                              <input type="hidden" name="price" value="<%= p.getPrice() %>">
+                                              <input type="hidden" name="quantity" value="1">
+                                              <button type="submit" class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</button>
+                                            </form>
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <div class="d-flex">
                                                     <i class="fas fa-star text-primary"></i>
@@ -440,7 +462,7 @@
                                                     %>
                                                     <img src="<%= mImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 h-100" alt="<%= p.getName() %>">
                                                     <div class="products-mini-icon rounded-circle bg-primary">
-                                                        <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
+                                                        <a href="<%= request.getContextPath() %>/DetailServlet?productId=<%= p.getId() %>"><i class="fa fa-eye fa-1x text-white"></i></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -456,7 +478,13 @@
                                             </div>
                                         </div>
                                         <div class="products-mini-add border p-3">
-                                            <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
+                                            <form method="post" action="<%= request.getContextPath() %>/CartServlet" class="d-inline">
+                                              <input type="hidden" name="action" value="add">
+                                              <input type="hidden" name="productId" value="<%= p.getId() %>">
+                                              <input type="hidden" name="price" value="<%= p.getPrice() %>">
+                                              <input type="hidden" name="quantity" value="1">
+                                              <button type="submit" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</button>
+                                            </form>
                                             <div class="d-flex">
                                                 <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></span></a>
                                                 <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0"><span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></span></a>

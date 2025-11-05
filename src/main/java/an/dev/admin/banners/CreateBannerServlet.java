@@ -14,7 +14,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 @MultipartConfig(
         fileSizeThreshold = 1024 * 1024,      // 1MB in memory before disk
@@ -63,7 +62,7 @@ public class CreateBannerServlet extends BaseAdminServlet {
 
             String safeFileName = submittedName.replaceAll("[^a-zA-Z0-9._-]", "_");
 
-            String imagesDirRealPath = request.getServletContext().getRealPath("/assets/images");
+            String imagesDirRealPath = request.getServletContext().getRealPath("/img");
             if (imagesDirRealPath == null) {
                 session.setAttribute("errorMessage", "Không xác định được thư mục lưu ảnh trên server");
                 request.getRequestDispatcher("/admin/banner/create.jsp").forward(request, response);
@@ -78,8 +77,18 @@ public class CreateBannerServlet extends BaseAdminServlet {
             }
 
             Path target = imagesDir.toPath().resolve(safeFileName);
+            if (Files.exists(target)) {
+                String base = safeFileName;
+                String name = base;
+                String ext = "";
+                int dot = base.lastIndexOf('.');
+                if (dot > 0) { name = base.substring(0, dot); ext = base.substring(dot); }
+                String unique = name + "_" + System.currentTimeMillis() + ext;
+                target = imagesDir.toPath().resolve(unique);
+                safeFileName = unique;
+            }
             try {
-                Files.copy(filePart.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+                Files.copy(filePart.getInputStream(), target);
             } finally {
                 filePart.delete();
             }
@@ -108,7 +117,7 @@ public class CreateBannerServlet extends BaseAdminServlet {
             seg = seg.trim();
             if (seg.startsWith("filename")) {
                 String name = seg.substring(seg.indexOf('=') + 1).trim().replace("\"", "");
-                // Remove path info some browsers may include
+           
                 return name.substring(Math.max(name.lastIndexOf('/'), name.lastIndexOf('\\')) + 1);
             }
         }

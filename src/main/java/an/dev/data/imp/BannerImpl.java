@@ -42,6 +42,7 @@ public class BannerImpl implements BannerDao{
 			stmt.setString(1, banner.image);
 			stmt.setString(2, banner.title);
 			stmt.setBoolean(3, banner.status);
+			stmt.setInt(4, banner.id);
 			stmt.execute();
 		}catch(SQLException e) {
 			e.printStackTrace();

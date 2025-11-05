@@ -13,9 +13,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 
 @MultipartConfig(
         fileSizeThreshold = 1 * 1024 * 1024,  // 1MB
@@ -78,12 +76,22 @@ public class EditBannerServlet extends BaseAdminServlet {
                 if (submittedName != null && !submittedName.isBlank()) {
                     String safeFileName = submittedName.replaceAll("[^a-zA-Z0-9._-]", "_");
 
-                    String imagesDirRealPath = request.getServletContext().getRealPath("/assets/images");
+                    String imagesDirRealPath = request.getServletContext().getRealPath("/img");
                     File imagesDir = new File(imagesDirRealPath);
                     if (!imagesDir.exists()) imagesDir.mkdirs();
 
                     Path target = imagesDir.toPath().resolve(safeFileName);
-                    Files.copy(filePart.getInputStream(), target, StandardCopyOption.REPLACE_EXISTING);
+                    if (java.nio.file.Files.exists(target)) {
+                        String base = safeFileName;
+                        String name = base;
+                        String ext = "";
+                        int dot = base.lastIndexOf('.');
+                        if (dot > 0) { name = base.substring(0, dot); ext = base.substring(dot); }
+                        String unique = name + "_" + System.currentTimeMillis() + ext;
+                        target = imagesDir.toPath().resolve(unique);
+                        safeFileName = unique;
+                    }
+                    java.nio.file.Files.copy(filePart.getInputStream(), target);
                     filePart.delete();
 
                     newFileName = safeFileName;

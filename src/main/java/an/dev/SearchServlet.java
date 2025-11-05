@@ -1,15 +1,10 @@
 package an.dev;
 
-import an.dev.data.DatabaseDao;
-import an.dev.data.dao.ProductDao;
-import an.dev.data.model.Product;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.net.URLEncoder;
 
 public class SearchServlet extends BaseServlet{
     @Override
@@ -17,33 +12,25 @@ public class SearchServlet extends BaseServlet{
             throws ServletException, IOException
     {
         setDataAttributes(request);
-        String keyword = request.getParameter("keyword");
+        String keyword = request.getParameter("q");
+        if (keyword == null || keyword.isEmpty()) keyword = request.getParameter("keyword");
         String categoryIdParam = request.getParameter("categoryId");
+        String pageParam = request.getParameter("page");
 
-        ProductDao productsDao = DatabaseDao.getInstance().getProductDao();
-        List<Product> productsList = new ArrayList<>();
-        List<Product> allProducts = productsDao.findAll();
-
-        String key = keyword != null ? keyword.trim().toLowerCase() : "";
-        Integer catId = null;
+        StringBuilder url = new StringBuilder(request.getContextPath()).append("/ShopServlet");
+        boolean first = true;
+        if (keyword != null && !keyword.trim().isEmpty()) {
+            url.append(first ? "?" : "&").append("q=").append(URLEncoder.encode(keyword, "UTF-8"));
+            first = false;
+        }
         if (categoryIdParam != null && !categoryIdParam.isEmpty()) {
-            try { catId = Integer.parseInt(categoryIdParam); } catch (NumberFormatException ignore) { catId = null; }
+            url.append(first ? "?" : "&").append("categoryId=").append(categoryIdParam);
+            first = false;
         }
-
-        for (Product p : allProducts) {
-            if (p == null) continue;
-            if (catId != null && catId != 0 && p.getCategory_id() != catId) continue;
-            if (key.length() > 0) {
-                String name = p.getName() != null ? p.getName().toLowerCase() : "";
-                if (!name.contains(key)) continue;
-            }
-            productsList.add(p);
+        if (pageParam != null && !pageParam.isEmpty()) {
+            url.append(first ? "?" : "&").append("page=").append(pageParam);
         }
-
-        request.setAttribute("productsList", productsList);
-        request.setAttribute("keyword", keyword);
-        request.setAttribute("categoryId", categoryIdParam);
-        request.getRequestDispatcher("admin/products/index.jsp").forward(request, response);
+        response.sendRedirect(url.toString());
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

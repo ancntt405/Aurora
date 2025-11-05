@@ -12,43 +12,52 @@ import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
 
 public class CartServlet extends BaseServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-        if (cart == null) {
-            cart = new ArrayList<>();
-        }
+        User user = (User) session.getAttribute("user");
 
+        List<OrderItems> cart = new ArrayList<>();
         List<CartItem> cartItems = new ArrayList<>();
-        for (OrderItems orderItem : cart) {
-            try {
-                Product product = DatabaseDao.getInstance().getProductDao().find(orderItem.getProduct_id());
-                if (product != null) {
-                    CartItem cartItem = new CartItem(orderItem, product);
-                    cartItems.add(cartItem);
+
+        if (user != null && user.getId() > 0) {
+            an.dev.data.imp.CartImpl cartDao = (an.dev.data.imp.CartImpl) DatabaseDao.getInstance().getCartDao();
+            List<Cart> rows = cartDao.findAllByUser(user.getId());
+            for (Cart row : rows) {
+                OrderItems oi = new OrderItems(0, row.getQuantity(), 0, 0, row.getProduct_id());
+                cart.add(oi);
+                try {
+                    Product product = DatabaseDao.getInstance().getProductDao().find(row.getProduct_id());
+                    if (product != null) {
+                        oi.setPrice(product.getPrice());
+                        cartItems.add(new CartItem(oi, product));
+                    }
+                } catch (Exception ignored) { }
+            }
+        } else {
+            List<OrderItems> sessionCart = (List<OrderItems>) session.getAttribute("cart");
+            if (sessionCart != null) cart = sessionCart;
+            for (OrderItems orderItem : cart) {
+                try {
+                    Product product = DatabaseDao.getInstance().getProductDao().find(orderItem.getProduct_id());
+                    if (product != null) cartItems.add(new CartItem(orderItem, product));
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-            } catch (Exception e) {
-                System.out.println("Error getting product details for product ID: " + orderItem.getProduct_id());
-                e.printStackTrace();
             }
         }
 
         int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
-
-        Logger.getLogger(CartServlet.class.getName()).log(Level.INFO, "Cart size: {0}", cart.size());
+        session.setAttribute("totalQuantity", totalQuantity);
 
         request.setAttribute("cart", cart);
         request.setAttribute("cartItems", cartItems);
         request.setAttribute("totalQuantity", totalQuantity);
         request.setAttribute("total", Helper.total(cart));
-        session.setAttribute("totalQuantity", totalQuantity);
-
         request.getRequestDispatcher("/cart.jsp").forward(request, response);
     }
 
@@ -95,83 +104,85 @@ public class CartServlet extends BaseServlet{
         double price = Double.parseDouble(priceStr);
 
         OrderItems orderItem = new OrderItems(0, quantity, price, 0, productId);
-
         HttpSession session = request.getSession();
-        List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-        boolean isExistInCart = false;
+        User user = (User) session.getAttribute("user");
 
-        if (cart == null) {
-            cart = new ArrayList<>();
-        } else {
-            for (OrderItems ord : cart) {
-                if (ord.getProduct_id() == productId) {
-                    ord.setQuantity(ord.getQuantity() + quantity);
-                    isExistInCart = true;
-                }
-            }
-        }
-
-        if (!isExistInCart) {
-            cart.add(orderItem);
-        }
-
-        // Lưu vào database nếu user đã đăng nhập
-        try {
-            User user = (User) session.getAttribute("user");
-            if (user != null && user.getId() > 0) {
+        if (user != null && user.getId() > 0) {
+            try {
                 int userId = user.getId();
                 CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
-
                 Cart existingCart = cartDao.findByUserAndProduct(userId, productId);
                 if (existingCart != null) {
                     cartDao.updateQuantity(userId, productId, existingCart.getQuantity() + quantity);
                 } else {
-                    Cart cartItem = new Cart();
-                    cartItem.setUser_id(userId);
-                    cartItem.setProduct_id(productId);
-                    cartItem.setQuantity(quantity);
-                    cartItem.setCreated_at(new Timestamp(System.currentTimeMillis()));
-                    cartDao.insert(cartItem);
+                    Cart cartRow = new Cart();
+                    cartRow.setUser_id(userId);
+                    cartRow.setProduct_id(productId);
+                    cartRow.setQuantity(quantity);
+                    cartRow.setCreated_at(new Timestamp(System.currentTimeMillis()));
+                    cartDao.insert(cartRow);
                 }
-            } else {
-                System.out.println("User not logged in or invalid user ID, cannot save to database");
-            }
-        } catch (Exception e) {
-            System.out.println("Error saving cart to database: " + e.getMessage());
-            e.printStackTrace();
-        }
 
-        session.setAttribute("cart", cart);
-        int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
-        session.setAttribute("totalQuantity", totalQuantity);
+                int totalQuantity = ((CartImpl) DatabaseDao.getInstance().getCartDao()).sumQuantityByUser(userId);
+                session.setAttribute("totalQuantity", totalQuantity);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+
+            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
+            boolean isExistInCart = false;
+            if (cart == null) cart = new ArrayList<>();
+            else {
+                for (OrderItems ord : cart) {
+                    if (ord.getProduct_id() == productId) { ord.setQuantity(ord.getQuantity() + quantity); isExistInCart = true; }
+                }
+            }
+            if (!isExistInCart) cart.add(orderItem);
+            session.setAttribute("cart", cart);
+            int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
+            session.setAttribute("totalQuantity", totalQuantity);
+        }
     }
 
     private void deleteOrder(HttpServletRequest request) {
         int productId = Integer.parseInt(request.getParameter("productId"));
         HttpSession session = request.getSession();
-        List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-        if (cart != null) {
-            cart.removeIf(ord -> ord.getProduct_id() == productId);
+        User user = (User) session.getAttribute("user");
+        if (user != null && user.getId() > 0) {
+            CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
+            cartDao.deleteByUserAndProduct(user.getId(), productId);
+            int totalQuantity = cartDao.sumQuantityByUser(user.getId());
+            session.setAttribute("totalQuantity", totalQuantity);
+        } else {
+            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
+            if (cart != null) cart.removeIf(ord -> ord.getProduct_id() == productId);
+            session.setAttribute("cart", cart);
+            int totalQuantity = cart != null ? cart.stream().mapToInt(OrderItems::getQuantity).sum() : 0;
+            session.setAttribute("totalQuantity", totalQuantity);
         }
-        session.setAttribute("cart", cart);
-        int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
-        session.setAttribute("totalQuantity", totalQuantity);
     }
 
     private void updateOrder(HttpServletRequest request) {
         int productId = Integer.parseInt(request.getParameter("productId"));
         int quantity = Integer.parseInt(request.getParameter("quantity"));
         HttpSession session = request.getSession();
-        List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-        if (cart != null && !cart.isEmpty()) {
-            for (OrderItems ord : cart) {
-                if (ord.getProduct_id() == productId) {
-                    ord.setQuantity(quantity);
+        User user = (User) session.getAttribute("user");
+        if (user != null && user.getId() > 0) {
+            CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
+            cartDao.updateQuantity(user.getId(), productId, quantity);
+            int totalQuantity = cartDao.sumQuantityByUser(user.getId());
+            session.setAttribute("totalQuantity", totalQuantity);
+        } else {
+            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
+            if (cart != null && !cart.isEmpty()) {
+                for (OrderItems ord : cart) {
+                    if (ord.getProduct_id() == productId) { ord.setQuantity(quantity); }
                 }
             }
+            session.setAttribute("cart", cart);
+            int totalQuantity = cart != null ? cart.stream().mapToInt(OrderItems::getQuantity).sum() : 0;
+            session.setAttribute("totalQuantity", totalQuantity);
         }
-        session.setAttribute("cart", cart);
-        int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
-        session.setAttribute("totalQuantity", totalQuantity);
     }
 }
