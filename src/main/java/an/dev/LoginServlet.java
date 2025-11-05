@@ -66,8 +66,61 @@ public class LoginServlet extends BaseServlet{
                 session.setAttribute("errors", "Mật khẩu không chính xác!");
                 response.sendRedirect("LoginServlet");
             } else {
+                // Đảm bảo user trong session có id hợp lệ (>0)
+                if (user.getId() <= 0) {
+                    User fixed = userDao.findByEmail(email);
+                    if (fixed != null) {
+                        user = fixed;
+                    }
+                }
                 session.setAttribute("user", user);
                 session.setAttribute("success", "Đăng nhập thành công!");
+                System.out.println("[Login] userId=" + user.getId());
+
+                // Nếu có yêu cầu thêm giỏ trước khi đăng nhập thì xử lý ngay sau đăng nhập
+                Object pendingObj = session.getAttribute("pendingCartRequest");
+                if (pendingObj instanceof java.util.Map) {
+                    try {
+                        @SuppressWarnings("unchecked")
+                        java.util.Map<String, String[]> pending = (java.util.Map<String, String[]>) pendingObj;
+                        String action = getFirst(pending.get("action"));
+                        String productIdStr = getFirst(pending.get("productId"));
+                        String qtyStr = getFirst(pending.get("quantity"));
+                        if (action == null || action.isBlank()) action = "add";
+                        if ("add".equalsIgnoreCase(action) || "create".equalsIgnoreCase(action)) {
+                            int productId = Integer.parseInt(productIdStr);
+                            int quantity = 1;
+                            try { if (qtyStr != null && !qtyStr.isBlank()) quantity = Integer.parseInt(qtyStr); } catch (NumberFormatException ignore) {}
+
+                            an.dev.data.imp.CartImpl cartDao = (an.dev.data.imp.CartImpl) DatabaseDao.getInstance().getCartDao();
+                            an.dev.data.model.Cart existing = cartDao.findByUserAndProduct(user.getId(), productId);
+                            if (existing != null) {
+                                cartDao.updateQuantity(user.getId(), productId, existing.getQuantity() + quantity);
+                            } else {
+                                an.dev.data.model.Cart row = new an.dev.data.model.Cart();
+                                row.setUser_id(user.getId());
+                                row.setProduct_id(productId);
+                                row.setQuantity(quantity);
+                                row.setCreated_at(new java.sql.Timestamp(System.currentTimeMillis()));
+                                cartDao.insert(row);
+                            }
+                            // Cập nhật badge tổng số lượng
+                            int totalQuantity = ((an.dev.data.imp.CartImpl) DatabaseDao.getInstance().getCartDao()).sumQuantityByUser(user.getId());
+                            session.setAttribute("totalQuantity", totalQuantity);
+                        }
+                    } catch (Exception ex) {
+                        // ghi log nhưng vẫn tiếp tục điều hướng
+                        ex.printStackTrace();
+                    } finally {
+                        session.removeAttribute("pendingCartRequest");
+                    }
+                    // Sau khi xử lý yêu cầu treo, chuyển về trang chủ
+                    response.sendRedirect("HomeServlet");
+                    return;
+                }
+
+                // Bỏ cơ chế redirectAfterLogin: luôn đưa về HomeServlet cho user thường
+                session.removeAttribute("redirectAfterLogin");
 
                 if ("admin".equals(user.getRole())) {
                     response.sendRedirect("DashboardServlet");
@@ -79,6 +132,10 @@ public class LoginServlet extends BaseServlet{
             session.setAttribute("errors", "Lỗi hệ thống: " + e.getMessage());
             response.sendRedirect("LoginServlet");
         }
+    }
+
+    private static String getFirst(String[] arr) {
+        return (arr != null && arr.length > 0) ? arr[0] : null;
     }
 
 }

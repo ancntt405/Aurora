@@ -33,7 +33,7 @@
     <!-- Cấu hình servlet Home -->
     <servlet>
         <servlet-name>HomeServlet</servlet-name>
-        <servlet-class>an.dev.HomeServllet</servlet-class>
+        <servlet-class>an.dev.HomeServlet</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -153,7 +153,10 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>an.dev.admin.products.DeleteProductServlet</servlet-class>
     </servlet>
-    <!-- HomeServlet mapping - chỉ dùng /HomeServlet để tránh xung đột -->
+    <servlet-mapping>
+        <servlet-name>HomeServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/HomeServlet</url-pattern>
@@ -404,6 +407,10 @@
     <servlet-mapping>
         <servlet-name>ShopServlet</servlet-name>
         <url-pattern>/ShopServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShopServlet</servlet-name>
+        <url-pattern>/Shop</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>

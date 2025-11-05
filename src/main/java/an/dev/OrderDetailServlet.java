@@ -5,6 +5,7 @@ import an.dev.data.dao.OrderItemDao;
 import an.dev.data.model.Order;
 import an.dev.data.model.OrderItems;
 import an.dev.data.model.Product;
+import an.dev.data.model.CartItem;
 import an.dev.data.model.User;
 
 import javax.servlet.ServletException;
@@ -37,7 +38,6 @@ public class OrderDetailServlet extends BaseServlet{
         OrderDao orderDao = DatabaseDao.getInstance().getOrderDao();
         Order order = orderDao.finByCode(code);
         if (order == null || order.getUser_id() != user.getId()) {
-            // not found or not owned by current user
             response.sendRedirect("OrdersServlet");
             return;
         }
@@ -46,12 +46,17 @@ public class OrderDetailServlet extends BaseServlet{
 
         List<OrderItems> items = orderItemDao.findByOrderId(order.getId());
         double total = 0.0;
+        java.util.List<CartItem> cartItems = new java.util.ArrayList<>();
         for (OrderItems oi : items) {
             total += oi.getPrice() * oi.getQuantity();
+            try {
+                Product p = DatabaseDao.getInstance().getProductDao().find(oi.getProduct_id());
+                if (p != null) cartItems.add(new CartItem(oi, p));
+            } catch (Exception ignored) {}
         }
 
         request.setAttribute("order", order);
-        request.setAttribute("items", items);
+        request.setAttribute("cartItems", cartItems);
         request.setAttribute("total", total);
 
         request.getRequestDispatcher("/order-detail.jsp").forward(request, response);
