@@ -58,7 +58,7 @@
                               %>
                                 <li>
                                     <div class="categories-bars-item">
-                                        <a href="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
+                                        <a href="${pageContext.request.contextPath}/ShopServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
                                         <span>(5)</span>
                                     </div>
                                 </li>
@@ -109,7 +109,7 @@
                                        %>
                                         <li>
                                             <div class="categories-bars-item">
-                                                <a href="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
+                                                <a href="${pageContext.request.contextPath}/ShopServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
                                                 <span>(5)</span>
                                             </div>
                                         </li>
@@ -322,7 +322,7 @@
                           %>
                           <li class="nav-item mb-4">
                               <a class="d-flex mx-2 py-2 bg-light rounded-pill <%= active ? "active" : "" %>" data-bs-toggle="pill"
-                                 href="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= id %>">
+                                 href="${pageContext.request.contextPath}/ShopServlet?categoryId=<%= id %>">
                                   <span class="text-dark" style="width: 130px;"><%= ctmp.getName() %></span>
                               </a>
                           </li>
