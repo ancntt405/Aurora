@@ -116,4 +116,40 @@ public class CartImpl implements CartDao{
 		return cartList;
 	}
 
+    @Override
+    public Cart findByUserAndProduct(int userId, int productId) {
+        String sql = "SELECT * FROM `cart` WHERE user_id = ? AND product_id = ? LIMIT 1";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            stmt.setInt(2, productId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                int quantity = rs.getInt("quantity");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                return new Cart(id, userId, productId, quantity, created_at);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public void updateQuantity(int userId, int productId, int i) {
+        String sql = "UPDATE `cart` SET quantity = ? WHERE user_id = ? AND product_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, i);
+            stmt.setInt(2, userId);
+            stmt.setInt(3, productId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }

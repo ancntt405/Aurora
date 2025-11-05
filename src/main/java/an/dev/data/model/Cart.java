@@ -17,6 +17,10 @@ public Cart(int id, int user_id, int product_id, int quantity, Timestamp created
 	this.created_at = created_at;
 }
 
+    public Cart() {
+        super();
+    }
+
     public int getId() {
         return id;
     }

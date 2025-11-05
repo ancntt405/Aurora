@@ -147,4 +147,159 @@ public class productImpl implements ProductDao {
 		return productList;
 	}
 
+    @Override
+    public List<Product> getProducts(int i, int perPage) {
+        List<Product> productList = new ArrayList<Product>();
+        int page = i <= 0 ? 1 : i;
+        int limit = perPage <= 0 ? 10 : perPage;
+        int offset = (page - 1) * limit;
+        String sql = "SELECT * FROM products LIMIT ?, ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, offset);
+            stmt.setInt(2, limit);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                double price_old = rs.getDouble("price_old");
+                int quantity = rs.getInt("quantity");
+                int view = rs.getInt("view");
+                int category_id = rs.getInt("category_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Boolean status = rs.getBoolean("status");
+                productList.add(new Product(id, name, image, description, price, price_old, quantity, view, category_id,
+                        created_at, status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Product> findAllByCategoryId(int categoryId) {
+        List<Product> productList = new ArrayList<Product>();
+        String sql = "SELECT * FROM products WHERE category_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, categoryId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                double price_old = rs.getDouble("price_old");
+                int quantity = rs.getInt("quantity");
+                int view = rs.getInt("view");
+                int catId = rs.getInt("category_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Boolean status = rs.getBoolean("status");
+                productList.add(new Product(id, name, image, description, price, price_old, quantity, view, catId,
+                        created_at, status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+    @Override
+    public List<Product> relatedProductList(Product products) {
+        List<Product> productList = new ArrayList<Product>();
+        String sql = "SELECT * FROM products WHERE category_id = ? AND id <> ? ORDER BY created_at DESC LIMIT 8";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, products.category_id);
+            stmt.setInt(2, products.id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                double price_old = rs.getDouble("price_old");
+                int quantity = rs.getInt("quantity");
+                int view = rs.getInt("view");
+                int category_id = rs.getInt("category_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Boolean status = rs.getBoolean("status");
+                productList.add(new Product(id, name, image, description, price, price_old, quantity, view, category_id,
+                        created_at, status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
+
+    @Override
+    public void updateView(Product products) {
+        String sql = "UPDATE products SET view = view + 1 WHERE id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, products.id);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public List<Product> filter(int categoryId, String property, String order) {
+        List<Product> productList = new ArrayList<Product>();
+        String col;
+        if ("price".equalsIgnoreCase(property)) col = "price";
+        else if ("created_at".equalsIgnoreCase(property) || "createdAt".equalsIgnoreCase(property)) col = "created_at";
+        else if ("view".equalsIgnoreCase(property)) col = "view";
+        else if ("name".equalsIgnoreCase(property)) col = "name";
+        else col = "created_at";
+
+        String dir = "DESC";
+        if (order != null && order.equalsIgnoreCase("asc")) dir = "ASC";
+
+        StringBuilder sql = new StringBuilder("SELECT * FROM products");
+        boolean filterCat = categoryId > 0;
+        if (filterCat) {
+            sql.append(" WHERE category_id = ?");
+        }
+        sql.append(" ORDER BY ").append(col).append(" ").append(dir);
+
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql.toString());
+            if (filterCat) {
+                stmt.setInt(1, categoryId);
+            }
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String name = rs.getString("name");
+                String image = rs.getString("image");
+                String description = rs.getString("description");
+                double price = rs.getDouble("price");
+                double price_old = rs.getDouble("price_old");
+                int quantity = rs.getInt("quantity");
+                int view = rs.getInt("view");
+                int catId = rs.getInt("category_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Boolean status = rs.getBoolean("status");
+                productList.add(new Product(id, name, image, description, price, price_old, quantity, view, catId,
+                        created_at, status));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productList;
+    }
 }

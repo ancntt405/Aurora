@@ -14,4 +14,8 @@ public interface OrderDao {
     public Order find(int id);
     public List<Order> findAll();
     public boolean hasOrdersByUserId(int userId);
+
+    List<Order> findByUserId(int id);
+
+    Order finByCode(String code);
 }

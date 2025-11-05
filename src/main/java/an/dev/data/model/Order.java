@@ -19,6 +19,13 @@ public class Order {
 		this.updated_at = updated_at;
 	}
 
+    public Order(String code, String status, int user_id) {
+        super();
+        this.code = code;
+        this.status = (status != null && status.equalsIgnoreCase("pending")) ? Boolean.FALSE : Boolean.TRUE;
+        this.user_id = user_id;
+    }
+
     public Timestamp getUpdated_at() {
         return updated_at;
     }
