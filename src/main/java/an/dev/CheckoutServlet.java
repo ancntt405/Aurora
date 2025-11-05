@@ -6,6 +6,9 @@ import an.dev.data.model.Order;
 import an.dev.data.model.OrderItems;
 import an.dev.data.model.User;
 import an.dev.util.StringHelper;
+import an.dev.data.imp.CartImpl;
+import an.dev.data.model.Cart;
+import an.dev.data.model.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
+import java.util.ArrayList;
 
 public class CheckoutServlet extends BaseServlet{
     @Override
@@ -69,8 +73,27 @@ public class CheckoutServlet extends BaseServlet{
     // trả về mã đơn hàng nếu thành công , còn khoong thì trả về null
     private String processCheckout(HttpServletRequest request, User user) {
         HttpSession session = request.getSession();
-        @SuppressWarnings("unchecked")
-        List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
+        List<OrderItems> cart = new ArrayList<>();
+
+        // Lấy giỏ hàng theo trạng thái đăng nhập
+        if (user != null && user.getId() > 0) {
+            CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
+            List<Cart> rows = cartDao.findAllByUser(user.getId());
+            for (Cart row : rows) {
+                OrderItems oi = new OrderItems(0, row.getQuantity(), 0, 0, row.getProduct_id());
+                try {
+                    Product product = DatabaseDao.getInstance().getProductDao().find(row.getProduct_id());
+                    if (product != null) {
+                        oi.setPrice(product.getPrice());
+                        cart.add(oi);
+                    }
+                } catch (Exception ignored) { }
+            }
+        } else {
+            @SuppressWarnings("unchecked")
+            List<OrderItems> sessionCart = (List<OrderItems>) session.getAttribute("cart");
+            if (sessionCart != null) cart = sessionCart;
+        }
 
         if (cart == null || cart.isEmpty()) {
             session.setAttribute("message", "Giỏ hàng trống. Vui lòng thêm sản phẩm trước khi thanh toán.");
@@ -100,10 +123,21 @@ public class CheckoutServlet extends BaseServlet{
             return null;
         }
 
-        // khi thành công thì xoá giỏ hàng(trả về 0)
+        // khi thành công thì xoá giỏ hàng
         session.setAttribute("message", "Checkout Success");
-        session.removeAttribute("cart");
-        session.setAttribute("totalQuantity", 0);
+        if (user != null && user.getId() > 0) {
+            try {
+                CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
+                for (OrderItems oi : cart) {
+                    cartDao.deleteByUserAndProduct(user.getId(), oi.getProduct_id());
+                }
+                int totalQuantity = cartDao.sumQuantityByUser(user.getId());
+                session.setAttribute("totalQuantity", totalQuantity);
+            } catch (Exception ignored) { }
+        } else {
+            session.removeAttribute("cart");
+            session.setAttribute("totalQuantity", 0);
+        }
         return order.getCode();
     }
 

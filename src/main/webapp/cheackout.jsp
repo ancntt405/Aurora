@@ -1,3 +1,6 @@
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,111 +36,7 @@
 
 <body>
 
-    <!-- Spinner Start -->
-    <div id="spinner"
-        class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-        <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
-            <span class="sr-only">Loading...</span>
-        </div>
-    </div>
-    <!-- Spinner End -->
-
-
-    <!-- Topbar Start -->
-    <div class="container-fluid px-5 d-none border-bottom d-lg-block">
-        <div class="row gx-0 align-items-center">
-            <div class="col-lg-4 text-center text-lg-start mb-lg-0">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a href="#" class="text-muted me-2"> Help</a><small> / </small>
-                    <a href="#" class="text-muted mx-2"> Support</a><small> / </small>
-                    <a href="#" class="text-muted ms-2"> Contact</a>
-                </div>
-            </div>
-            <div class="col-lg-4 text-center d-flex align-items-center justify-content-center">
-                <small class="text-dark">Call Us:</small>
-                <a href="#" class="text-muted">(+012) 1234 567890</a>
-            </div>
-
-            <div class="col-lg-4 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted me-2" data-bs-toggle="dropdown"><small>
-                                USD</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> Euro</a>
-                            <a href="#" class="dropdown-item"> Dolar</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted mx-2" data-bs-toggle="dropdown"><small>
-                                English</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> English</a>
-                            <a href="#" class="dropdown-item"> Turkish</a>
-                            <a href="#" class="dropdown-item"> Spanol</a>
-                            <a href="#" class="dropdown-item"> Italiano</a>
-                        </div>
-                    </div>
-                    <div class="dropdown">
-                        <a href="#" class="dropdown-toggle text-muted ms-2" data-bs-toggle="dropdown"><small><i
-                                    class="fa fa-home me-2"></i> My Dashboard</small></a>
-                        <div class="dropdown-menu rounded">
-                            <a href="#" class="dropdown-item"> Login</a>
-                            <a href="#" class="dropdown-item"> Wishlist</a>
-                            <a href="#" class="dropdown-item"> My Card</a>
-                            <a href="#" class="dropdown-item"> Notifications</a>
-                            <a href="#" class="dropdown-item"> Account Settings</a>
-                            <a href="#" class="dropdown-item"> My Account</a>
-                            <a href="#" class="dropdown-item"> Log Out</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="container-fluid px-5 py-4 d-none d-lg-block">
-        <div class="row gx-0 align-items-center text-center">
-            <div class="col-md-4 col-lg-3 text-center text-lg-start">
-                <div class="d-inline-flex align-items-center">
-                    <a href="" class="navbar-brand p-0">
-                        <h1 class="display-5 text-primary m-0"><i
-                                class="fas fa-shopping-bag text-secondary me-2"></i>Electro</h1>
-                        <!-- <img src="img/logo.png" alt="Logo"> -->
-                    </a>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-6 text-center">
-                <div class="position-relative ps-4">
-                    <div class="d-flex border rounded-pill">
-                        <input class="form-control border-0 rounded-pill w-100 py-3" type="text"
-                            data-bs-target="#dropdownToggle123" placeholder="Search Looking For?">
-                        <select class="form-select text-dark border-0 border-start rounded-0 p-3" style="width: 200px;">
-                            <option value="All Category">All Category</option>
-                            <option value="Pest Control-2">Category 1</option>
-                            <option value="Pest Control-3">Category 2</option>
-                            <option value="Pest Control-4">Category 3</option>
-                            <option value="Pest Control-5">Category 4</option>
-                        </select>
-                        <button type="button" class="btn btn-primary rounded-pill py-3 px-5" style="border: 0;"><i
-                                class="fas fa-search"></i></button>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4 col-lg-3 text-center text-lg-end">
-                <div class="d-inline-flex align-items-center">
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-random"></i></i></a>
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></a>
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
-                        <span class="text-dark ms-2">$0.00</span></a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Topbar End -->
-
+  <jsp:include page="./inc/header.jsp" />
     <!-- Navbar & Hero Start -->
     <div class="container-fluid nav-bar p-0">
         <div class="row gx-0 bg-primary px-5 align-items-center">
@@ -145,41 +44,31 @@
                 <nav class="navbar navbar-light position-relative" style="width: 250px;">
                     <button class="navbar-toggler border-0 fs-4 w-100 px-0 text-start" type="button"
                         data-bs-toggle="collapse" data-bs-target="#allCat">
-                        <h4 class="m-0"><i class="fa fa-bars me-2"></i>All Categories</h4>
+                        <h4 class="m-0"><i class="fa fa-bars me-2"></i>Tất cả danh mục</h4>
                     </button>
                     <div class="collapse navbar-collapse rounded-bottom" id="allCat">
                         <div class="navbar-nav ms-auto py-0">
                             <ul class="list-unstyled categories-bars">
+
+                             <%
+                               java.util.List<an.dev.data.model.Category> categoryList =
+                               (java.util.List<an.dev.data.model.Category>) request.getAttribute("categoryList");
+                               int printed = 0;
+                               if (categoryList != null) {
+                               for (an.dev.data.model.Category cat : categoryList) {
+                               if (printed >= 10) break; // lấy 5 danh mục
+                              %>
                                 <li>
                                     <div class="categories-bars-item">
-                                        <a href="#">Accessories</a>
-                                        <span>(3)</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="categories-bars-item">
-                                        <a href="#">Electronics & Computer</a>
+                                        <a href="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
                                         <span>(5)</span>
                                     </div>
                                 </li>
-                                <li>
-                                    <div class="categories-bars-item">
-                                        <a href="#">Laptops & Desktops</a>
-                                        <span>(2)</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="categories-bars-item">
-                                        <a href="#">Mobiles & Tablets</a>
-                                        <span>(8)</span>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="categories-bars-item">
-                                        <a href="#">SmartPhone & Smart TV</a>
-                                        <span>(5)</span>
-                                    </div>
-                                </li>
+                                <%
+                                 printed++;
+                                }
+                             }
+                             %>
                             </ul>
                         </div>
                     </div>
@@ -198,55 +87,39 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto py-0">
-                            <a href="index.html" class="nav-item nav-link">Home</a>
-                            <a href="shop.html" class="nav-item nav-link">Shop</a>
-                            <a href="single.html" class="nav-item nav-link">Single Page</a>
+                            <a href="${pageContext.request.contextPath}/HomeServlet" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="${pageContext.request.contextPath}/ShopServlet" class="nav-item nav-link">Cửa Hàng</a>
                             <div class="nav-item dropdown">
-                                <a href="#" class="nav-link active" data-bs-toggle="dropdown"><span
-                                        class="dropdown-toggle">Pages</span></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trang</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="bestseller.jsp" class="dropdown-item">Bestseller</a>
-                                    <a href="cart.jsp" class="dropdown-item">Cart Page</a>
-                                    <a href="cheackout.html" class="dropdown-item active">Cheackout</a>
-                                    <a href="404.jsp" class="dropdown-item">404 Page</a>
+                                    <a href="${pageContext.request.contextPath}/CartServlet" class="dropdown-item">giỏ hàng</a>
+                                    <a href="${pageContext.request.contextPath}/CheckoutServlet" class="dropdown-item">Thanh Toán</a>
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link me-2">Contact</a>
+                            <a href="${pageContext.request.contextPath}/ContactServlet" class="nav-item nav-link me-2">Liên Hệ</a>
                             <div class="nav-item dropdown d-block d-lg-none mb-3">
-                                <a href="#" class="nav-link" data-bs-toggle="dropdown"><span class="dropdown-toggle">All
-                                        Category</span></a>
+                                <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tất cả danh mục</a>
                                 <div class="dropdown-menu m-0">
                                     <ul class="list-unstyled categories-bars">
+                                       <%
+                                       java.util.List<an.dev.data.model.Category> categoryListMobile =
+                                           (java.util.List<an.dev.data.model.Category>) request.getAttribute("categoryList");
+                                       int printedMobile = 0;
+                                       if (categoryListMobile != null) {
+                                           for (an.dev.data.model.Category cat : categoryListMobile) {
+                                               if (printedMobile >= 10) break; // lấy 10 danh mục
+                                       %>
                                         <li>
                                             <div class="categories-bars-item">
-                                                <a href="#">Accessories</a>
-                                                <span>(3)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="categories-bars-item">
-                                                <a href="#">Electronics & Computer</a>
+                                                <a href="${pageContext.request.contextPath}/HomeServlet?categoryId=<%= cat.id %>"><%= cat.name %></a>
                                                 <span>(5)</span>
                                             </div>
                                         </li>
-                                        <li>
-                                            <div class="categories-bars-item">
-                                                <a href="#">Laptops & Desktops</a>
-                                                <span>(2)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="categories-bars-item">
-                                                <a href="#">Mobiles & Tablets</a>
-                                                <span>(8)</span>
-                                            </div>
-                                        </li>
-                                        <li>
-                                            <div class="categories-bars-item">
-                                                <a href="#">SmartPhone & Smart TV</a>
-                                                <span>(5)</span>
-                                            </div>
-                                        </li>
+                                         <%
+                                               printedMobile++;
+                                           }
+                                       }
+                                       %>
                                     </ul>
                                 </div>
                             </div>
@@ -262,152 +135,39 @@
 
     <!-- Single Page Header start -->
     <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Cheackout Page</h1>
+        <h1 class="text-center text-white display-6 wow fadeInUp" data-wow-delay="0.1s">Trang thanh toán</h1>
         <ol class="breadcrumb justify-content-center mb-0 wow fadeInUp" data-wow-delay="0.3s">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Cheackout</li>
+            <li class="breadcrumb-item"><a href="${pageContext.request.contextPath}/HomeServlet">Trang chủ</a></li>
+            <li class="breadcrumb-item active text-white">Thanh Toán</li>
         </ol>
     </div>
     <!-- Single Page Header End -->
 
-    <!-- Searvices Start -->
-    <div class="container-fluid px-0">
-        <div class="row g-0">
-            <div class="col-6 col-md-4 col-lg-2 border-start border-end wow fadeInUp" data-wow-delay="0.1s">
-                <div class="p-4">
-                    <div class="d-inline-flex align-items-center">
-                        <i class="fa fa-sync-alt fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Free Return</h6>
-                            <p class="mb-0">30 days money back guarantee!</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.2s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fab fa-telegram-plane fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Free Shipping</h6>
-                            <p class="mb-0">Free shipping on all order</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.3s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-life-ring fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Support 24/7</h6>
-                            <p class="mb-0">We support online 24 hrs a day</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.4s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-credit-card fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Receive Gift Card</h6>
-                            <p class="mb-0">Recieve gift all over oder $50</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.5s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-lock fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Secure Payment</h6>
-                            <p class="mb-0">We Value Your Security</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-6 col-md-4 col-lg-2 border-end wow fadeInUp" data-wow-delay="0.6s">
-                <div class="p-4">
-                    <div class="d-flex align-items-center">
-                        <i class="fas fa-blog fa-2x text-primary"></i>
-                        <div class="ms-4">
-                            <h6 class="text-uppercase mb-2">Online Service</h6>
-                            <p class="mb-0">Free return products in 30 days</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Searvices End -->
+
 
 
     <!-- Checkout Page Start -->
     <div class="container-fluid bg-light overflow-hidden py-5">
         <div class="container py-5">
-            <h1 class="mb-4 wow fadeInUp" data-wow-delay="0.1s">Billing details</h1>
-            <form action="#">
+            <h1 class="mb-4 wow fadeInUp" data-wow-delay="0.1s">Thông tin thanh toán</h1>
+            <form action="${pageContext.request.contextPath}/CheckoutServlet" method="post">
                 <div class="row g-5">
                     <div class="col-md-12 col-lg-6 col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
-                        <div class="row">
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">First Name<sup>*</sup></label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
-                            <div class="col-md-12 col-lg-6">
-                                <div class="form-item w-100">
-                                    <label class="form-label my-3">Last Name<sup>*</sup></label>
-                                    <input type="text" class="form-control">
-                                </div>
-                            </div>
+                        <div class="form-item">
+                            <label class="form-label my-3">Họ và tên <sup>*</sup></label>
+                            <input type="text" class="form-control" name="name" value="${sessionScope.user.name}" placeholder="Nhập họ và tên" required>
                         </div>
                         <div class="form-item">
-                            <label class="form-label my-3">Company Name<sup>*</sup></label>
-                            <input type="text" class="form-control">
+                            <label class="form-label my-3">Email <sup>*</sup></label>
+                            <input type="email" class="form-control" name="email" value="${sessionScope.user.email}" placeholder="name@example.com" required>
                         </div>
                         <div class="form-item">
-                            <label class="form-label my-3">Address <sup>*</sup></label>
-                            <input type="text" class="form-control" placeholder="House Number Street Name">
+                            <label class="form-label my-3">Số điện thoại <sup>*</sup></label>
+                            <input type="tel" class="form-control" name="phone" value="${sessionScope.user.phone}" placeholder="0123 456 789" required>
                         </div>
                         <div class="form-item">
-                            <label class="form-label my-3">Town/City<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Country<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Postcode/Zip<sup>*</sup></label>
-                            <input type="text" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Mobile<sup>*</sup></label>
-                            <input type="tel" class="form-control">
-                        </div>
-                        <div class="form-item">
-                            <label class="form-label my-3">Email Address<sup>*</sup></label>
-                            <input type="email" class="form-control">
-                        </div>
-                        <div class="form-check my-3">
-                            <input type="checkbox" class="form-check-input" id="Account-1" name="Accounts"
-                                value="Accounts">
-                            <label class="form-check-label" for="Account-1">Create an account?</label>
-                        </div>
-                        <hr>
-                        <div class="form-check my-3">
-                            <input class="form-check-input" type="checkbox" id="Address-1" name="Address"
-                                value="Address">
-                            <label class="form-check-label" for="Address-1">Ship to a different address?</label>
-                        </div>
-                        <div class="form-item">
-                            <textarea name="text" class="form-control" spellcheck="false" cols="30" rows="11"
-                                placeholder="Oreder Notes (Optional)"></textarea>
+                            <label class="form-label my-3">Địa chỉ <sup>*</sup></label>
+                            <input type="text" class="form-control" name="address" value="${sessionScope.user.address}" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành" required>
                         </div>
                     </div>
                     <div class="col-md-12 col-lg-6 col-xl-6 wow fadeInUp" data-wow-delay="0.3s">
@@ -415,70 +175,51 @@
                             <table class="table">
                                 <thead>
                                     <tr class="text-center">
-                                        <th scope="col" class="text-start">Name</th>
-                                        <th scope="col">Model</th>
-                                        <th scope="col">Price</th>
-                                        <th scope="col">Quantity</th>
-                                        <th scope="col">Total</th>
+                                        <th scope="col" class="text-start">Tên sản phẩm</th>
+                                        <th scope="col">Mã</th>
+                                        <th scope="col">Đơn giá</th>
+                                        <th scope="col">SL</th>
+                                        <th scope="col">Thành tiền</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            Apple iPad Mini
-                                        </th>
-                                        <td class="py-4">G2356</td>
-                                        <td class="py-4">$269.00</td>
-                                        <td class="py-4 text-center">2</td>
-                                        <td class="py-4">$538.00</td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            Apple iPad Mini
-                                        </th>
-                                        <td class="py-4">G2356</td>
-                                        <td class="py-4">$269.00</td>
-                                        <td class="py-4">2</td>
-                                        <td class="py-4">$538.00</td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            Apple iPad Mini
-                                        </th>
-                                        <td class="py-4">G2356</td>
-                                        <td class="py-4">$269.00</td>
-                                        <td class="py-4">2</td>
-                                        <td class="py-4">$538.00</td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            Apple iPad Mini
-                                        </th>
-                                        <td class="py-4">G2356</td>
-                                        <td class="py-4">$269.00</td>
-                                        <td class="py-4">2</td>
-                                        <td class="py-4">$538.00</td>
-                                    </tr>
-                                    <tr class="text-center">
-                                        <th scope="row" class="text-start py-4">
-                                            Apple iPad Mini
-                                        </th>
-                                        <td class="py-4">G2356</td>
-                                        <td class="py-4">$269.00</td>
-                                        <td class="py-4">2</td>
-                                        <td class="py-4">$538.00</td>
-                                    </tr>
+                                    <c:choose>
+                                        <c:when test="${empty sessionScope.cartItems}">
+                                            <tr>
+                                                <td colspan="5" class="text-center py-4">Giỏ hàng trống</td>
+                                            </tr>
+                                        </c:when>
+                                        <c:otherwise>
+                                            <c:forEach items="${sessionScope.cartItems}" var="ci">
+                                                <tr class="text-center">
+                                                    <th scope="row" class="text-start py-4">
+                                                        ${ci.product.name}
+                                                    </th>
+                                                    <td class="py-4">#${ci.product.id}</td>
+                                                    <td class="py-4">
+                                                        <fmt:formatNumber value="${ci.orderItem.price * 1000}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                                    </td>
+                                                    <td class="py-4 text-center">${ci.orderItem.quantity}</td>
+                                                    <td class="py-4">
+                                                        <fmt:formatNumber value="${ci.orderItem.quantity * ci.orderItem.price * 1000}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                                    </td>
+                                                </tr>
+                                            </c:forEach>
+                                        </c:otherwise>
+                                    </c:choose>
                                     <tr>
                                         <th scope="row">
                                         </th>
                                         <td class="py-4"></td>
                                         <td class="py-4"></td>
                                         <td class="py-4">
-                                            <p class="mb-0 text-dark py-2">Subtotal</p>
+                                            <p class="mb-0 text-dark py-2">Tạm tính</p>
                                         </td>
                                         <td class="py-4">
                                             <div class="py-2 text-center border-bottom border-top">
-                                                <p class="mb-0 text-dark">$1134.00</p>
+                                                <p class="mb-0 text-dark">
+                                                    <fmt:formatNumber value="${sessionScope.total * 1000}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
@@ -486,63 +227,28 @@
                                         <th scope="row">
                                         </th>
                                         <td class="py-4">
-                                            <p class="mb-0 text-dark py-4">Shipping</p>
-                                        </td>
-                                        <td colspan="3" class="py-4">
-                                            <div class="form-check text-start">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0"
-                                                    id="Shipping-1" name="Shipping-1" value="Shipping">
-                                                <label class="form-check-label" for="Shipping-1">Free Shipping</label>
-                                            </div>
-                                            <div class="form-check text-start">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0"
-                                                    id="Shipping-2" name="Shipping-1" value="Shipping">
-                                                <label class="form-check-label" for="Shipping-2">Flat rate:
-                                                    $15.00</label>
-                                            </div>
-                                            <div class="form-check text-start">
-                                                <input type="checkbox" class="form-check-input bg-primary border-0"
-                                                    id="Shipping-3" name="Shipping-1" value="Shipping">
-                                                <label class="form-check-label" for="Shipping-3">Local Pickup:
-                                                    $8.00</label>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">
-                                        </th>
-                                        <td class="py-4">
-                                            <p class="mb-0 text-dark text-uppercase py-2">TOTAL</p>
+                                            <p class="mb-0 text-dark text-uppercase py-2">Tổng cộng</p>
                                         </td>
                                         <td class="py-4"></td>
                                         <td class="py-4"></td>
                                         <td class="py-4">
                                             <div class="py-2 text-center border-bottom border-top">
-                                                <p class="mb-0 text-dark">$135.00</p>
+                                                <p class="mb-0 text-dark">
+                                                    <fmt:formatNumber value="${sessionScope.total * 1000}" type="currency" currencySymbol="₫" groupingUsed="true"/>
+                                                </p>
                                             </div>
                                         </td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="row g-0 text-center align-items-center justify-content-center border-bottom py-2">
-                            <div class="col-12">
-                                <div class="form-check text-start my-2">
-                                    <input type="checkbox" class="form-check-input bg-primary border-0" id="Transfer-1"
-                                        name="Transfer" value="Transfer">
-                                    <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-                                </div>
-                                <p class="text-start text-dark">Make your payment directly into our bank account. Please
-                                    use your Order ID as the payment reference. Your order will not be shipped until the
-                                    funds have cleared in our account.</p>
-                            </div>
-                        </div>
+
                         <div class="row g-4 text-center align-items-center justify-content-center border-bottom py-2">
                             <div class="col-12">
                                 <div class="form-check text-start my-2">
                                     <input type="checkbox" class="form-check-input bg-primary border-0" id="Payments-1"
                                         name="Payments" value="Payments">
-                                    <label class="form-check-label" for="Payments-1">Check Payments</label>
+                                    <label class="form-check-label" for="Payments-1">Thanh toán bằng séc (demo)</label>
                                 </div>
                             </div>
                         </div>
@@ -551,7 +257,7 @@
                                 <div class="form-check text-start my-2">
                                     <input type="checkbox" class="form-check-input bg-primary border-0" id="Delivery-1"
                                         name="Delivery" value="Delivery">
-                                    <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
+                                    <label class="form-check-label" for="Delivery-1">Thanh toán khi nhận hàng (demo)</label>
                                 </div>
                             </div>
                         </div>
@@ -560,14 +266,14 @@
                                 <div class="form-check text-start my-2">
                                     <input type="checkbox" class="form-check-input bg-primary border-0" id="Paypal-1"
                                         name="Paypal" value="Paypal">
-                                    <label class="form-check-label" for="Paypal-1">Paypal</label>
+                                    <label class="form-check-label" for="Paypal-1">Paypal (demo)</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row g-4 text-center align-items-center justify-content-center pt-4">
-                            <button type="button"
-                                class="btn btn-primary border-secondary py-3 px-4 text-uppercase w-100 text-primary">Place
-                                Order</button>
+                            <button type="submit"
+                                class="btn btn-primary border-secondary py-3 px-4 text-uppercase w-100 text-primary">Đặt
+                                hàng</button>
                         </div>
                     </div>
                 </div>
@@ -577,113 +283,7 @@
     <!-- Checkout Page End -->
 
     <!-- Footer Start -->
-    <div class="container-fluid footer py-5 wow fadeIn" data-wow-delay="0.2s">
-        <div class="container py-5">
-            <div class="row g-4 rounded mb-5" style="background: rgba(255, 255, 255, .03);">
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="rounded p-4">
-                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4"
-                            style="width: 70px; height: 70px;">
-                            <i class="fas fa-map-marker-alt fa-2x text-primary"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white">Address</h4>
-                            <p class="mb-2">123 Street New York.USA</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="rounded p-4">
-                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4"
-                            style="width: 70px; height: 70px;">
-                            <i class="fas fa-envelope fa-2x text-primary"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white">Mail Us</h4>
-                            <p class="mb-2">info@example.com</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="rounded p-4">
-                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4"
-                            style="width: 70px; height: 70px;">
-                            <i class="fa fa-phone-alt fa-2x text-primary"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white">Telephone</h4>
-                            <p class="mb-2">(+012) 3456 7890</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="rounded p-4">
-                        <div class="rounded-circle bg-secondary d-flex align-items-center justify-content-center mb-4"
-                            style="width: 70px; height: 70px;">
-                            <i class="fab fa-firefox-browser fa-2x text-primary"></i>
-                        </div>
-                        <div>
-                            <h4 class="text-white">Yoursite@ex.com</h4>
-                            <p class="mb-2">(+012) 3456 7890</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row g-5">
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="footer-item d-flex flex-column">
-                        <div class="footer-item">
-                            <h4 class="text-primary mb-4">Newsletter</h4>
-                            <p class="text-white mb-3">Dolor amet sit justo amet elitr clita ipsum elitr est.Lorem ipsum
-                                dolor sit amet, consectetur adipiscing elit consectetur adipiscing elit.</p>
-                            <div class="position-relative mx-auto rounded-pill">
-                                <input class="form-control rounded-pill w-100 py-3 ps-4 pe-5" type="text"
-                                    placeholder="Enter your email">
-                                <button type="button"
-                                    class="btn btn-primary rounded-pill position-absolute top-0 end-0 py-2 mt-2 me-2">SignUp</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="footer-item d-flex flex-column">
-                        <h4 class="text-primary mb-4">Customer Service</h4>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Contact Us</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Returns</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Order History</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Site Map</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Testimonials</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> My Account</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Unsubscribe Notification</a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="footer-item d-flex flex-column">
-                        <h4 class="text-primary mb-4">Information</h4>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> About Us</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Delivery infomation</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Privacy Policy</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Terms & Conditions</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Warranty</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> FAQ</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Seller Login</a>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-6 col-xl-3">
-                    <div class="footer-item d-flex flex-column">
-                        <h4 class="text-primary mb-4">Extras</h4>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Brands</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Gift Vouchers</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Affiliates</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Wishlist</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Order History</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Track Your Order</a>
-                        <a href="#" class=""><i class="fas fa-angle-right me-2"></i> Track Your Order</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+        <%@include file='./inc/footer.jsp' %>
     <!-- Footer End -->
 
 

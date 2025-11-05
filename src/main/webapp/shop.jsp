@@ -59,7 +59,7 @@
                                  %>
                                    <li>
                                        <div class="categories-bars-item">
-                                           <a href="<%= request.getContextPath() %>/HomeServlet?categoryId=<%= cat.getId() %>"><%= cat.getName() %></a>
+                                           <a href="<%= request.getContextPath() %>/ShopServlet?categoryId=<%= cat.getId() %>"><%= cat.getName() %></a>
                                            <span>(5)</span>
                                        </div>
                                    </li>
@@ -110,7 +110,7 @@
                                           %>
                                            <li>
                                                <div class="categories-bars-item">
-                                                   <a href="<%= request.getContextPath() %>/HomeServlet?categoryId=<%= cat.getId() %>"><%= cat.getName() %></a>
+                                                   <a href="<%= request.getContextPath() %>/ShopServlet?categoryId=<%= cat.getId() %>"><%= cat.getName() %></a>
                                                    <span>(5)</span>
                                                </div>
                                            </li>
