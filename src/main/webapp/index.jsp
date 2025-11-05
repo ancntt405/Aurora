@@ -142,7 +142,7 @@
                     int count = 0;
                     if (bannerList != null) {
                       for (an.dev.data.model.Banner banner : bannerList) {
-                        if (count >= 3) break;
+                        if (count >= 10) break; // lấy tối đa 10 ảnh banner
                   %>
                     <div class="header-carousel-item">
                       <img src="${pageContext.request.contextPath}/img/<%= banner.getImage() %>" class="img-fluid w-100" alt="<%= banner.getTitle() %>">
@@ -369,7 +369,7 @@
                                             <img src="<%= pImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 rounded-top" alt="<%= product.getName() %>">
 
                                             <div class="product-details">
-                                                <a href="#"><i class="fa fa-eye fa-1x"></i></a>
+                                                <a href="${pageContext.request.contextPath}/DetailServlet?productId=<%= product.getId() %>"><i class="fa fa-eye fa-1x"></i></a>
                                             </div>
                                         </div>
                                         <div class="text-center rounded-bottom p-4">
@@ -388,11 +388,14 @@
                                             <% } %>
                                         </div>
                                     </div>
-                                    <div
-                                        class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
-                                        <a href="#"
-                                            class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i
-                                                class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
+                                    <div class="product-item-add border border-top-0 rounded-bottom  text-center p-4 pt-0">
+                                        <form method="post" action="${pageContext.request.contextPath}/CartServlet" class="d-inline">
+                                          <input type="hidden" name="action" value="add">
+                                          <input type="hidden" name="productId" value="<%= product.getId() %>">
+                                          <input type="hidden" name="price" value="<%= product.getPrice() %>">
+                                          <input type="hidden" name="quantity" value="1">
+                                          <button type="submit" class="btn btn-primary border-secondary rounded-pill py-2 px-4 mb-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</button>
+                                        </form>
                                         <div class="d-flex justify-content-between align-items-center">
                                             <div class="d-flex">
                                                 <i class="fas fa-star text-primary"></i>
@@ -428,97 +431,7 @@
             </div>
         </div>
     </div>
-    <!-- Product List Satrt -->
-    <div class="container-fluid products productList overflow-hidden">
-        <div class="container products-mini py-5">
-            <div class="mx-auto text-center mb-5" style="max-width: 900px;">
-                <h4 class="text-primary border-bottom border-primary border-2 d-inline-block p-2 title-border-radius wow fadeInUp"
-                    data-wow-delay="0.1s">Sản phẩm</h4>
-                <h1 class="mb-0 display-3 wow fadeInUp" data-wow-delay="0.3s">Tất cả sản phẩm</h1>
-            </div>
-            <div class="productList-carousel owl-carousel pt-4 wow fadeInUp" data-wow-delay="0.3s">
-                <div class="productImg-carousel owl-carousel productList-item">
-                  <%
-                    java.util.List<an.dev.data.model.Product> allProducts =
-                      (java.util.List<an.dev.data.model.Product>) request.getAttribute("productList");
 
-                    java.util.List<an.dev.data.model.Category> catListAll =
-                      (java.util.List<an.dev.data.model.Category>) request.getAttribute("categoryList");
-                    java.util.Map<Integer, String> catNameById2 = new java.util.HashMap<>();
-                    if (catListAll != null) {
-                      for (an.dev.data.model.Category c : catListAll) {
-                        catNameById2.put(c.getId(), c.getName());
-                      }
-                    }
-
-                    java.text.DecimalFormatSymbols symbols2 = new java.text.DecimalFormatSymbols();
-                    symbols2.setGroupingSeparator('.');
-                    symbols2.setDecimalSeparator(',');
-                    java.text.DecimalFormat df2 = new java.text.DecimalFormat("#,##0.##", symbols2);
-
-                    if (allProducts != null && !allProducts.isEmpty()) {
-                      for (an.dev.data.model.Product p : allProducts) {
-                  %>
-                  <div class="productImg-item products-mini-item border">
-                    <div class="row g-0">
-                      <div class="col-5">
-                        <div class="products-mini-img border-end h-100">
-                          <%
-                            String apImgVal = p.getImage();
-                            String apImgSrc;
-                            if (apImgVal != null && apImgVal.startsWith("http")) apImgSrc = apImgVal;
-                            else if (apImgVal != null && (apImgVal.startsWith("img/") || apImgVal.startsWith("assets/"))) apImgSrc = request.getContextPath()+"/"+apImgVal;
-                            else apImgSrc = request.getContextPath()+"/img/"+apImgVal;
-                          %>
-                          <img src="<%= apImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 h-100" alt="<%= p.getName() %>">
-                          <div class="products-mini-icon rounded-circle bg-primary">
-                            <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="col-7">
-                        <div class="products-mini-content p-3">
-                          <a href="#" class="d-block mb-2"><%= catNameById2.containsKey(p.getCategory_id()) ? catNameById2.get(p.getCategory_id()) : "Unknown" %></a>
-                          <a href="#" class="d-block h4"><%= p.getName() %></a>
-                          <del class="me-2 fs-5"><%= df2.format(p.getPrice() * 1000) %>đ</del>
-                          <% if (p.getPrice_old() > 0) { %>
-                          <span class="text-primary fs-5"><%= df2.format(p.getPrice_old() * 1000) %> đ</span>
-                          <% } %>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="products-mini-add border p-3">
-                      <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i
-                          class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
-                      <div class="d-flex">
-                        <a href="#"
-                           class="text-primary d-flex align-items-center justify-content-center me-3"><span
-                            class="rounded-circle btn-sm-square border"><i
-                              class="fas fa-random"></i></i></a>
-                        <a href="#"
-                           class="text-primary d-flex align-items-center justify-content-center me-0"><span
-                            class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
-                      </div>
-                    </div>
-                  </div>
-                  <%
-                      }
-                    } else {
-                  %>
-                    <div class="text-center w-100"><p>Không có sản phẩm nào.</p></div>
-                  <%
-                    }
-                  %>
-                </div>
-              </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- Product List End -->
-
-    <%@include file='./inc/footer.jsp' %>
 
     <!-- Bestseller Products Start -->
     <div class="container-fluid products pb-5">
@@ -583,7 +496,7 @@
                           %>
                           <img src="<%= bsImgSrc %>" onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/product-1.png';" class="img-fluid w-100 h-100" alt="<%= bestsellerProduct.getName() %>">
                           <div class="products-mini-icon rounded-circle bg-primary">
-                            <a href="#"><i class="fa fa-eye fa-1x text-white"></i></a>
+                            <a href="${pageContext.request.contextPath}/DetailServlet?productId=<%= bestsellerProduct.getId() %>"><i class="fa fa-eye fa-1x text-white"></i></a>
                           </div>
                         </div>
                       </div>
@@ -599,7 +512,13 @@
                       </div>
                     </div>
                     <div class="products-mini-add border p-3">
-                      <a href="#" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</a>
+                      <form method="post" action="${pageContext.request.contextPath}/CartServlet" class="d-inline">
+                        <input type="hidden" name="action" value="add">
+                        <input type="hidden" name="productId" value="<%= bestsellerProduct.getId() %>">
+                        <input type="hidden" name="price" value="<%= bestsellerProduct.getPrice() %>">
+                        <input type="hidden" name="quantity" value="1">
+                        <button type="submit" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</button>
+                      </form>
                       <div class="d-flex">
                         <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></i></a>
                         <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0"><span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>

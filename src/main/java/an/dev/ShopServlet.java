@@ -18,22 +18,6 @@ public class ShopServlet extends BaseServlet{
         ProductDao productsDao = DatabaseDao.getInstance().getProductDao();
         List<Product> productsList = productsDao.findAll();
 
-        if(request.getParameter("page") != null) {
-            try {
-                int page = Integer.parseInt(request.getParameter("page"));
-                if (page < 1) page = 1;
-                int total = productsList.size();
-                int numberPage = (int) Math.ceil((double) total / (double) Constants.PER_PAGE);
-                productsList = productsDao.getProducts(page, Constants.PER_PAGE);
-
-                request.setAttribute("page", page);
-                request.setAttribute("total", total);
-                request.setAttribute("numberPage", numberPage);
-            } catch (NumberFormatException ignored) {
-                
-            }
-        }
-
 
         // lọc sản phẩm theo category_id
         String catParam = request.getParameter("categoryId");
@@ -67,6 +51,19 @@ public class ShopServlet extends BaseServlet{
             }
         }
 
+        // lọc theo từ khóa q nếu có (tìm trong tên, không phân biệt hoa thường)
+        String q = request.getParameter("q");
+        if (q != null && !q.trim().isEmpty()) {
+            String key = q.trim().toLowerCase();
+            java.util.List<Product> filteredByKey = new java.util.ArrayList<>();
+            for (Product p : productsList) {
+                String name = p.getName() != null ? p.getName().toLowerCase() : "";
+                if (name.contains(key)) filteredByKey.add(p);
+            }
+            productsList = filteredByKey;
+            request.setAttribute("q", q);
+        }
+
         String sort = request.getParameter("sort");
         if (sort != null && !sort.isEmpty()) {
             switch (sort) {
@@ -85,16 +82,29 @@ public class ShopServlet extends BaseServlet{
             }
             request.setAttribute("sort", sort);
         }
+        int page = 1;
+        try { if (request.getParameter("page") != null) page = Integer.parseInt(request.getParameter("page")); } catch (NumberFormatException ignored) {}
+        if (page < 1) page = 1;
+        int total = productsList.size();
+        int numberPage = (int) Math.ceil((double) total / (double) Constants.PER_PAGE);
+        if (numberPage <= 0) numberPage = 1;
+        if (page > numberPage) page = numberPage;
+        int from = Math.min((page - 1) * Constants.PER_PAGE, total);
+        int to = Math.min(from + Constants.PER_PAGE, total);
+        List<Product> pageItems = productsList.subList(from, to);
 
+        // featured sản phẩm đầu trang dựa trên danh sách sau lọc
         java.util.List<Product> featured = new java.util.ArrayList<>();
-        for (int i = 0; i < productsList.size() && i < 3; i++) {
-            featured.add(productsList.get(i));
+        for (int i = 0; i < pageItems.size() && i < 3; i++) {
+            featured.add(pageItems.get(i));
         }
         request.setAttribute("featuredList", featured);
 
         response.setContentType("text/html;charset=UTF-8");
-
-        request.setAttribute("productList", productsList);
+        request.setAttribute("page", page);
+        request.setAttribute("total", total);
+        request.setAttribute("numberPage", numberPage);
+        request.setAttribute("productList", pageItems);
         request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
 

@@ -115,6 +115,17 @@ public class EditProductServlet extends BaseAdminServlet {
         int categoryId = parseIntOrDefault(request.getParameter("categoryId"), product.getCategory_id());
         boolean status = parseBooleanOrDefault(request.getParameter("status"), product.getStatus());
 
+       
+        try {
+            javax.servlet.http.Part mainImagePart = request.getPart("mainImage");
+            if (mainImagePart != null && mainImagePart.getSize() > 0) {
+                String saved = UploadFileHelper.uploadSingleFile(Constants.UPLOAD_DIR, mainImagePart, request);
+                if (saved != null && !saved.isEmpty()) {
+                    product.setImage(saved);
+                }
+            }
+        } catch (Exception ignore) {}
+
         if (image != null && !image.trim().isEmpty()) {
             String v = image.trim();
             if (v.startsWith("img/")) v = v.substring(4);

@@ -151,5 +151,54 @@ public class CartImpl implements CartDao{
             e.printStackTrace();
         }
     }
+    public java.util.List<Cart> findAllByUser(int userId) {
+        java.util.List<Cart> cartList = new java.util.ArrayList<>();
+        String sql = "SELECT * FROM `cart` WHERE user_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                int product_id = rs.getInt("product_id");
+                int quantity = rs.getInt("quantity");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                cartList.add(new Cart(id, userId, product_id, quantity, created_at));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return cartList;
+    }
+
+    public void deleteByUserAndProduct(int userId, int productId) {
+        String sql = "DELETE FROM `cart` WHERE user_id = ? AND product_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            stmt.setInt(2, productId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int sumQuantityByUser(int userId) {
+        String sql = "SELECT COALESCE(SUM(quantity),0) AS total FROM `cart` WHERE user_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
 }

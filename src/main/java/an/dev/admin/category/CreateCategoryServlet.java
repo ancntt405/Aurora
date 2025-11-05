@@ -63,31 +63,30 @@ public class CreateCategoryServlet extends BaseAdminServlet {
                             break;
                     }
                 } else {
-                    // Handle file upload
+                    // hàm upload file ảnh 
                     if ("thumbnail".equals(item.getFieldName()) && !item.getName().isEmpty()) {
-                        // Create upload directory if not exists
-                        String uploadPath = getServletContext().getRealPath("/") + "assets/images/categories/";
+                        // tạo thư mục lưu trữ ảnh  (use /img/categories)
+                        String uploadPath = getServletContext().getRealPath("/img/categories/");
                         File uploadDir = new File(uploadPath);
                         if (!uploadDir.exists()) {
                             uploadDir.mkdirs();
                         }
 
-                        // Generate unique filename
+                        // tạo ảnh
                         String originalFileName = item.getName();
                         String fileExtension = originalFileName.substring(originalFileName.lastIndexOf("."));
                         String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
 
-                        // Save file
+                        // lưu file ảnh 
                         File uploadedFile = new File(uploadDir, uniqueFileName);
                         item.write(uploadedFile);
 
-                        thumbnail = "categories/" + uniqueFileName;
+                        thumbnail = "categories/" + uniqueFileName; 
                         uploadedFileName = uniqueFileName;
                     }
                 }
             }
 
-            // Validate input
             if (name.trim().isEmpty()) {
                 session.setAttribute("errorMessage", "Vui lòng nhập tên danh mục");
                 response.sendRedirect("CreateCategoryServlet");
@@ -110,7 +109,7 @@ public class CreateCategoryServlet extends BaseAdminServlet {
             } else {
                 // Delete uploaded file if database insert failed
                 if (!uploadedFileName.isEmpty()) {
-                    String uploadPath = getServletContext().getRealPath("/") + "assets/images/categories/";
+                    String uploadPath = getServletContext().getRealPath("/img/categories/");
                     File fileToDelete = new File(uploadPath + uploadedFileName);
                     if (fileToDelete.exists()) {
                         fileToDelete.delete();
