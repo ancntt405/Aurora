@@ -9,6 +9,7 @@ import an.dev.util.StringHelper;
 import an.dev.data.imp.CartImpl;
 import an.dev.data.model.Cart;
 import an.dev.data.model.Product;
+import an.dev.data.model.CartItem;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -67,6 +68,23 @@ public class CheckoutServlet extends BaseServlet{
         }
 
         request.setAttribute("order", order);
+
+        OrderItemDao orderItemDao = DatabaseDao.getInstance().getOrderItem();
+        java.util.List<OrderItems> items = orderItemDao.findByOrderId(order.getId());
+        java.util.List<CartItem> cartItems = new java.util.ArrayList<>();
+        double total = 0;
+        for (OrderItems oi : items) {
+            try {
+                Product p = DatabaseDao.getInstance().getProductDao().find(oi.getProduct_id());
+                if (p != null) {
+                    cartItems.add(new CartItem(oi, p));
+                    total += oi.getQuantity() * oi.getPrice();
+                }
+            } catch (Exception ignored) {}
+        }
+        request.setAttribute("cartItems", cartItems);
+        request.setAttribute("total", total);
+
         request.getRequestDispatcher("/checkout-success.jsp").forward(request, response);
     }
 

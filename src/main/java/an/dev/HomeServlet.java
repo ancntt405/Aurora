@@ -9,10 +9,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import an.dev.data.model.Product;
 
-public class HomeServllet extends BaseServlet{
+public class HomeServlet extends BaseServlet{
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
+            throws ServletException, IOException {
         // Sử dụng interface DataProvider để truyền dữ liệu
         setDataAttributes(request);
         // Chọn ngẫu nhiên 6 sản phẩm để hiển thị mỗi lần load trang
@@ -54,7 +54,7 @@ public class HomeServllet extends BaseServlet{
     }
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
-        throws ServletException, IOException {
-       doGet(request, response);
+            throws ServletException, IOException {
+        doGet(request, response);
     }
 }

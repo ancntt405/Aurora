@@ -119,6 +119,7 @@ public class UserImpl implements UserDao{
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
+				int id = rs.getInt("id");
 				String hashed = rs.getString("password");
 				// verify using BCrypt if available, else fallback to plain compare
 				boolean match;
@@ -135,7 +136,9 @@ public class UserImpl implements UserDao{
 					Timestamp updated_at = rs.getTimestamp("updated_at");
 					String role = rs.getString("role");
 					String name = rs.getString("name");
-					return new User(email, hashed, phone, address, image, created_at, updated_at, role, name);
+					User u = new User(email, hashed, phone, address, image, created_at, updated_at, role, name);
+					u.setId(id);
+					return u;
 				}
 			}
 		} catch (SQLException e) {
@@ -153,6 +156,7 @@ public class UserImpl implements UserDao{
 			stmt.setString(1, email);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
+				int id = rs.getInt("id");
 				String password = rs.getString("password");
 				String phone = rs.getString("phone");
 				String address = rs.getString("address");
@@ -161,7 +165,9 @@ public class UserImpl implements UserDao{
 				Timestamp updated_at = rs.getTimestamp("updated_at");
 				String role = rs.getString("role");
 				String name = rs.getString("name");
-				return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+				User u = new User(email, password, phone, address, image, created_at, updated_at, role, name);
+				u.setId(id);
+				return u;
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -178,6 +184,7 @@ public class UserImpl implements UserDao{
             stmt.setString(1, phone);
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
+                int id = rs.getInt("id");
                 String email = rs.getString("email");
                 String password = rs.getString("password");
                 String address = rs.getString("address");
@@ -186,7 +193,9 @@ public class UserImpl implements UserDao{
                 Timestamp updated_at = rs.getTimestamp("updated_at");
                 String role = rs.getString("role");
                 String name = rs.getString("name");
-                return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+                User u = new User(email, password, phone, address, image, created_at, updated_at, role, name);
+                u.setId(id);
+                return u;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -214,7 +223,9 @@ public class UserImpl implements UserDao{
 				Timestamp updated_at = rs.getTimestamp("updated_at");
 				String role = rs.getString("role");
 				String name = rs.getString("name");
-				userList.add(new User(email, password, phone, address, image, created_at, updated_at, role, name));
+				User u = new User(email, password, phone, address, image, created_at, updated_at, role, name);
+				u.setId(id);
+				userList.add(u);
 			}
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -229,6 +240,7 @@ public class UserImpl implements UserDao{
             stmt.setInt(1, id);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
+                    int uid = rs.getInt("id");
                     String email = rs.getString("email");
                     String password = rs.getString("password");
                     String phone = rs.getString("phone");
@@ -238,7 +250,9 @@ public class UserImpl implements UserDao{
                     java.sql.Timestamp updated_at = rs.getTimestamp("updated_at");
                     String role = rs.getString("role");
                     String name = rs.getString("name");
-                    return new User(email, password, phone, address, image, created_at, updated_at, role, name);
+                    User u = new User(email, password, phone, address, image, created_at, updated_at, role, name);
+                    u.setId(uid);
+                    return u;
                 }
             }
         } catch (SQLException e) {

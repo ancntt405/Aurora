@@ -87,33 +87,37 @@
                                     </thead>
                                     <tbody>
                                         <c:set var="index" value="0"/>
-                                        <c:forEach items="${orderList}" var="order">
-                                        <c:set var="index" value="${index + 1}"/>
-                                            <tr>
+                                        <c:choose>
+                                          <c:when test="${empty orderList}">
+                                            <tr><td colspan="6" class="text-center py-4">Không có đơn hàng nào.</td></tr>
+                                          </c:when>
+                                          <c:otherwise>
+                                            <c:forEach items="${orderList}" var="order">
+                                              <c:set var="index" value="${index + 1}"/>
+                                              <tr>
                                                 <td>${index}</td>
                                                 <td><a href="OrderItemServlet?orderId=${order.id}">${order.code}</a></td>
-                                                <td><c:choose>
-                                                      <c:when test="${order.status}">
-                                                        <span class="badge bg-success">Completed</span>
-                                                      </c:when>
-                                                      <c:otherwise>
-                                                        <span class="badge bg-warning text-dark">Pending</span>
-                                                      </c:otherwise>
-                                                    </c:choose>
+                                                <td>
+                                                  <c:choose>
+                                                    <c:when test="${order.status}"><span class="badge bg-success">Completed</span></c:when>
+                                                    <c:otherwise><span class="badge bg-warning text-dark">Pending</span></c:otherwise>
+                                                  </c:choose>
                                                 </td>
-                                                <td>${order.user.email}</td>
-                                       <td>
-                                      <a href="EditOrderServlet?orderId=${order.id}">
-                                         <i class="bi bi-pencil-square"></i>
-                                      </a>
-                                      </td>
-                                      <td>
-                                      <a href="DeleteOrderServlet?OrderId=${order.id}" class="text-danger">
-                                         <i class="fa fa-trash"></i>
-                                      </a>
-                                      </td>
-                                            </tr>
-                                        </c:forEach>
+                                                <td>${emailByUserId[order.user_id]}</td>
+                                               <td>
+                                              <a href="EditOrderServlet?orderId=${order.id}">
+                                                 <i class="bi bi-pencil-square"></i>
+                                              </a>
+                                              </td>
+                                              <td>
+                                              <a href="DeleteOrderServlet?OrderId=${order.id}" class="text-danger">
+                                                 <i class="fa fa-trash"></i>
+                                              </a>
+                                              </td>
+                                              </tr>
+                                            </c:forEach>
+                                          </c:otherwise>
+                                        </c:choose>
                                     </tbody>
                                 </table>
                             </div>

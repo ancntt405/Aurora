@@ -17,27 +17,40 @@ public class OrderImpl implements OrderDao {
 	@Override
 	public boolean insert(Order order) {
 		// TODO Auto-generated method stub
-		String sql = "insert into orders(code, status, user_id, created_at, updated_at) values(?,?,?,?,?)";
-		try {
-			Connection conn = MySQLDriver.getInstance().getConnection();
-			PreparedStatement stmt = conn.prepareStatement(sql);
-			stmt.setString(1, order.code);
-			stmt.setBoolean(2, order.status);
-			stmt.setInt(3, order.user_id);
-			stmt.setTimestamp(4, order.created_at);
-			stmt.setTimestamp(5, order.updated_at);
-			stmt.execute();
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
+		String sql = "insert into orders(code, status, user_id, created_at) values(?,?,?,?)";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql, java.sql.Statement.RETURN_GENERATED_KEYS);
+            stmt.setString(1, order.code);
+            stmt.setBoolean(2, order.status);
+            stmt.setInt(3, order.user_id);
+            java.sql.Timestamp created = (order.created_at != null) ? order.created_at : new java.sql.Timestamp(System.currentTimeMillis());
+            stmt.setTimestamp(4, created);
+            int affected = stmt.executeUpdate();
+            if (affected > 0) {
+                try (ResultSet keys = stmt.getGeneratedKeys()) {
+                    if (keys.next()) {
+                        order.id = keys.getInt(1);
+                    }
+                }
+                if (order.id == 0) {
+                    try (PreparedStatement ps = conn.prepareStatement("SELECT LAST_INSERT_ID() AS id");
+                         ResultSet rs = ps.executeQuery()) {
+                        if (rs.next()) order.id = rs.getInt("id");
+                    }
+                }
+            }
+        }catch(SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
 	}
 
 	@Override
 	public boolean update(Order order) {
 		// TODO Auto-generated method stub
-		String sql = "update orders set code = ?, status = ?, user_id = ?, created_at = ?,updated_at = ? where id = ?";
+		String sql = "update orders set code = ?, status = ?, user_id = ?, created_at = ? where id = ?";
 		try {
 			Connection conn = MySQLDriver.getInstance().getConnection();
 			PreparedStatement stmt = conn.prepareStatement(sql);
@@ -45,7 +58,7 @@ public class OrderImpl implements OrderDao {
 			stmt.setBoolean(2, order.status);
 			stmt.setInt(3, order.user_id);
 			stmt.setTimestamp(4, order.created_at);
-			stmt.setTimestamp(5, order.updated_at);
+			stmt.setInt(5, order.id);
 			stmt.execute();
 		}catch(SQLException e) {
 			e.printStackTrace();
@@ -85,7 +98,8 @@ public class OrderImpl implements OrderDao {
 				Boolean status = rs.getBoolean("status");
 				int user_id = rs.getInt("user_id");
 				Timestamp created_at = rs.getTimestamp("created_at");
-				Timestamp updated_at = rs.getTimestamp("updated_at");
+				Timestamp updated_at;
+				try { rs.findColumn("updated_at"); updated_at = rs.getTimestamp("updated_at"); } catch (SQLException ignore) { updated_at = null; }
 				return new Order(id, code, status, user_id, created_at, updated_at);
 			}
 			
@@ -110,7 +124,7 @@ public class OrderImpl implements OrderDao {
 				Boolean status = rs.getBoolean("status");
 				int user_id = rs.getInt("user_id");
 				Timestamp created_at = rs.getTimestamp("created_at");
-				Timestamp updated_at = rs.getTimestamp("updated_at");
+				Timestamp updated_at; try { rs.findColumn("updated_at"); updated_at = rs.getTimestamp("updated_at"); } catch (SQLException ignore) { updated_at = null; }
 				orderList.add(new Order(id, code, status, user_id, created_at, updated_at));
 			}
 			
@@ -150,7 +164,7 @@ public class OrderImpl implements OrderDao {
                 Boolean status = rs.getBoolean("status");
                 int user_id = rs.getInt("user_id");
                 Timestamp created_at = rs.getTimestamp("created_at");
-                Timestamp updated_at = rs.getTimestamp("updated_at");
+                Timestamp updated_at; try { rs.findColumn("updated_at"); updated_at = rs.getTimestamp("updated_at"); } catch (SQLException ignore) { updated_at = null; }
                 orderList.add(new Order(orderId, code, status, user_id, created_at, updated_at));
             }
         } catch (SQLException e) {
@@ -173,7 +187,7 @@ public class OrderImpl implements OrderDao {
                 Boolean status = rs.getBoolean("status");
                 int user_id = rs.getInt("user_id");
                 Timestamp created_at = rs.getTimestamp("created_at");
-                Timestamp updated_at = rs.getTimestamp("updated_at");
+                Timestamp updated_at; try { rs.findColumn("updated_at"); updated_at = rs.getTimestamp("updated_at"); } catch (SQLException ignore) { updated_at = null; }
                 return new Order(id, codeVal, status, user_id, created_at, updated_at);
             }
         } catch (SQLException e) {

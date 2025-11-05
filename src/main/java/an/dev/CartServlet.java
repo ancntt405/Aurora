@@ -20,6 +20,24 @@ public class CartServlet extends BaseServlet{
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        if (user != null && user.getId() <= 0) {
+            try {
+                an.dev.data.dao.UserDao udao = DatabaseDao.getInstance().getUserDao();
+                User fixed = udao.findByEmail(user.getEmail());
+                if (fixed != null) {
+                    user = fixed;
+                    session.setAttribute("user", user);
+                }
+            } catch (Exception ignore) {}
+        }
+        // Bắt buộc đăng nhập để xem giỏ hàng (chỉ lưu DB)
+        if (user == null || user.getId() <= 0) {
+            session.setAttribute("redirectAfterLogin", "CartServlet");
+            response.sendRedirect("LoginServlet");
+            return;
+        }
+        // Đang đăng nhập: đảm bảo không dùng giỏ hàng session cũ
+        session.removeAttribute("cart");
 
         List<OrderItems> cart = new ArrayList<>();
         List<CartItem> cartItems = new ArrayList<>();
@@ -37,17 +55,6 @@ public class CartServlet extends BaseServlet{
                         cartItems.add(new CartItem(oi, product));
                     }
                 } catch (Exception ignored) { }
-            }
-        } else {
-            List<OrderItems> sessionCart = (List<OrderItems>) session.getAttribute("cart");
-            if (sessionCart != null) cart = sessionCart;
-            for (OrderItems orderItem : cart) {
-                try {
-                    Product product = DatabaseDao.getInstance().getProductDao().find(orderItem.getProduct_id());
-                    if (product != null) cartItems.add(new CartItem(orderItem, product));
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
             }
         }
 
@@ -71,18 +78,21 @@ public class CartServlet extends BaseServlet{
             action = "create";
         }
 
-        // Bắt buộc đăng nhập cho các thao tác giỏ hàng để lưu DB
+        // Bắt buộc đăng nhập cho tất cả thao tác giỏ hàng (DB only)
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute("user");
+        System.out.println("[CartServlet] doPost userId=" + (user != null ? user.getId() : -1) + ", action=" + action);
+
+        // Nếu chưa đăng nhập, lưu yêu cầu tạm và chuyển đến Login
         if (user == null || user.getId() <= 0) {
-            // Ghi nhớ tham số để có thể thêm lại sau khi đăng nhập (tùy chọn)
             java.util.Map<String, String[]> pending = new java.util.HashMap<>(request.getParameterMap());
             session.setAttribute("pendingCartRequest", pending);
-            session.setAttribute("message", "Vui lòng đăng nhập để thêm/ sửa giỏ hàng");
+            session.setAttribute("redirectAfterLogin", "CartServlet");
             response.sendRedirect("LoginServlet");
             return;
         }
-        System.out.println("[CartServlet] doPost userId=" + user.getId() + ", action=" + action);
+        // Đang đăng nhập: đảm bảo chỉ dùng DB, không dùng cart trong session
+        session.removeAttribute("cart");
 
         switch (action) {
             case "create":
@@ -204,20 +214,6 @@ public class CartServlet extends BaseServlet{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
-
-            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-            boolean isExistInCart = false;
-            if (cart == null) cart = new ArrayList<>();
-            else {
-                for (OrderItems ord : cart) {
-                    if (ord.getProduct_id() == productId) { ord.setQuantity(ord.getQuantity() + quantity); isExistInCart = true; }
-                }
-            }
-            if (!isExistInCart) cart.add(orderItem);
-            session.setAttribute("cart", cart);
-            int totalQuantity = cart.stream().mapToInt(OrderItems::getQuantity).sum();
-            session.setAttribute("totalQuantity", totalQuantity);
         }
     }
 
@@ -229,12 +225,6 @@ public class CartServlet extends BaseServlet{
             CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
             cartDao.deleteByUserAndProduct(user.getId(), productId);
             int totalQuantity = cartDao.sumQuantityByUser(user.getId());
-            session.setAttribute("totalQuantity", totalQuantity);
-        } else {
-            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-            if (cart != null) cart.removeIf(ord -> ord.getProduct_id() == productId);
-            session.setAttribute("cart", cart);
-            int totalQuantity = cart != null ? cart.stream().mapToInt(OrderItems::getQuantity).sum() : 0;
             session.setAttribute("totalQuantity", totalQuantity);
         }
     }
@@ -248,16 +238,6 @@ public class CartServlet extends BaseServlet{
             CartImpl cartDao = (CartImpl) DatabaseDao.getInstance().getCartDao();
             cartDao.updateQuantity(user.getId(), productId, quantity);
             int totalQuantity = cartDao.sumQuantityByUser(user.getId());
-            session.setAttribute("totalQuantity", totalQuantity);
-        } else {
-            List<OrderItems> cart = (List<OrderItems>) session.getAttribute("cart");
-            if (cart != null && !cart.isEmpty()) {
-                for (OrderItems ord : cart) {
-                    if (ord.getProduct_id() == productId) { ord.setQuantity(quantity); }
-                }
-            }
-            session.setAttribute("cart", cart);
-            int totalQuantity = cart != null ? cart.stream().mapToInt(OrderItems::getQuantity).sum() : 0;
             session.setAttribute("totalQuantity", totalQuantity);
         }
     }
