@@ -19,34 +19,82 @@ public class ShopServlet extends BaseServlet{
         List<Product> productsList = productsDao.findAll();
 
         if(request.getParameter("page") != null) {
-            int page = Integer.parseInt(request.getParameter("page"));
-            int total = productsList.size();
-            int numberPage = total / Constants.PER_PAGE;
-            productsList = productsDao.getProducts((page - 1) * Constants.PER_PAGE, Constants.PER_PAGE);
+            try {
+                int page = Integer.parseInt(request.getParameter("page"));
+                if (page < 1) page = 1;
+                int total = productsList.size();
+                int numberPage = (int) Math.ceil((double) total / (double) Constants.PER_PAGE);
+                productsList = productsDao.getProducts(page, Constants.PER_PAGE);
 
-            request.setAttribute("page", page);
-            request.setAttribute("total", total);
-            request.setAttribute("numberPage", numberPage);
+                request.setAttribute("page", page);
+                request.setAttribute("total", total);
+                request.setAttribute("numberPage", numberPage);
+            } catch (NumberFormatException ignored) {
+                
+            }
         }
 
 
-        //lọc sản phẩm theo category_id
+        // lọc sản phẩm theo category_id
         String catParam = request.getParameter("categoryId");
         if (catParam != null && !catParam.isEmpty()) {
             try {
                 int categoryId = Integer.parseInt(catParam);
                 // Ưu tiên lọc phía máy chủ thông qua DAO để tránh dữ liệu cũ
-                List<Product> filtered = productDao.findAllByCategoryId(categoryId);
-                request.setAttribute("productList", filtered);
+                List<Product> filtered = productsDao.findAllByCategoryId(categoryId);
+                productsList = filtered;
                 request.setAttribute("selectedCategoryId", categoryId);
             } catch (NumberFormatException ignored) {
                 // Bỏ qua categoryId không hợp lệ, quay lại danh sách đầy đủ
             }
         }
 
+        // lọc theo giá tối đa (priceMax) nếu có
+        String priceMaxParam = request.getParameter("priceMax");
+        if (priceMaxParam != null && !priceMaxParam.isEmpty()) {
+            try {
+                double priceMax = Double.parseDouble(priceMaxParam);
+                java.util.List<Product> filteredByPrice = new java.util.ArrayList<>();
+                for (Product p : productsList) {
+                    if (p.getPrice() <= priceMax) {
+                        filteredByPrice.add(p);
+                    }
+                }
+                productsList = filteredByPrice;
+                request.setAttribute("priceMax", priceMax);
+            } catch (NumberFormatException ignored) {
+              
+            }
+        }
+
+        String sort = request.getParameter("sort");
+        if (sort != null && !sort.isEmpty()) {
+            switch (sort) {
+                case "price_asc":
+                    productsList.sort(java.util.Comparator.comparingDouble(Product::getPrice));
+                    break;
+                case "price_desc":
+                    productsList.sort(java.util.Comparator.comparingDouble(Product::getPrice).reversed());
+                    break;
+                case "name_asc":
+                    productsList.sort(java.util.Comparator.comparing(Product::getName, java.text.Collator.getInstance()));
+                    break;
+                case "newest":
+                    productsList.sort((a,b) -> Integer.compare(b.getId(), a.getId()));
+                    break;
+            }
+            request.setAttribute("sort", sort);
+        }
+
+        java.util.List<Product> featured = new java.util.ArrayList<>();
+        for (int i = 0; i < productsList.size() && i < 3; i++) {
+            featured.add(productsList.get(i));
+        }
+        request.setAttribute("featuredList", featured);
+
         response.setContentType("text/html;charset=UTF-8");
 
-        request.setAttribute("productsList", productsList);
+        request.setAttribute("productList", productsList);
         request.getRequestDispatcher("/shop.jsp").forward(request, response);
     }
 
