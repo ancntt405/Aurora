@@ -85,16 +85,16 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
                         <div class="navbar-nav ms-auto py-0">
-                            <a href="index.html" class="nav-item nav-link active">Trang chủ</a>
-                            <a href="shop.html" class="nav-item nav-link">Cửa Hàng</a>
+                            <a href="${pageContext.request.contextPath}/HomeServlet" class="nav-item nav-link active">Trang chủ</a>
+                            <a href="${pageContext.request.contextPath}/ShopServlet" class="nav-item nav-link">Cửa Hàng</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trang</a>
                                 <div class="dropdown-menu m-0">
-                                    <a href="cart.jsp" class="dropdown-item">giỏ hàng</a>
-                                    <a href="cheackout.jsp" class="dropdown-item">Thanh Toán</a>
+                                    <a href="${pageContext.request.contextPath}/CartServlet" class="dropdown-item">giỏ hàng</a>
+                                    <a href="${pageContext.request.contextPath}/CheckoutServlet" class="dropdown-item">Thanh Toán</a>
                                 </div>
                             </div>
-                            <a href="contact.jsp" class="nav-item nav-link me-2">Liên Hệ</a>
+                            <a href="${pageContext.request.contextPath}/ContactServlet" class="nav-item nav-link me-2">Liên Hệ</a>
                             <div class="nav-item dropdown d-block d-lg-none mb-3">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Tất cả danh mục</a>
                                 <div class="dropdown-menu m-0">
@@ -517,6 +517,8 @@
         </div>
     </div>
     <!-- Product List End -->
+
+    <%@include file='./inc/footer.jsp' %>
 
     <!-- Bestseller Products Start -->
     <div class="container-fluid products pb-5">

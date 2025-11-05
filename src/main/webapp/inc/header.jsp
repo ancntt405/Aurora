@@ -5,8 +5,8 @@
         <div class="row gx-0 align-items-center">
             <div class="col-lg-4 text-center text-lg-start mb-lg-0">
                 <div class="d-inline-flex align-items-center" style="height: 45px;">
-                    <a href="#" class="text-muted mx-2"> Hỗ trợ</a><small> / </small>
-                    <a href="#" class="text-muted ms-2"> Liên Hệ</a>
+                    <a href="${pageContext.request.contextPath}/AboutServlet" class="text-muted mx-2"> Hỗ trợ</a><small> / </small>
+                    <a href="${pageContext.request.contextPath}/ContactServlet" class="text-muted ms-2"> Liên Hệ</a>
 
                 </div>
             </div>
@@ -49,9 +49,9 @@
                             <span class="dropdown-item-text text-muted"><%= currentUser.getEmail() %></span>
                             <div class="dropdown-divider"></div>
                             <a href="#" class="dropdown-item">Danh sách yêu thích</a>
-                            <a href="#" class="dropdown-item">Giỏ hàng của tôi</a>
-                            <a href="#" class="dropdown-item">Cài đặt tài khoản</a>
-                            <a href="#" class="dropdown-item">Tài khoản của tôi</a>
+                            <a href="${pageContext.request.contextPath}/CartServlet" class="dropdown-item">Giỏ hàng của tôi</a>
+                            <a href="${pageContext.request.contextPath}/UserServlet" class="dropdown-item">Cài đặt tài khoản</a>
+                            <a href="${pageContext.request.contextPath}/ProfileServlet" class="dropdown-item">Tài khoản của tôi</a>
                             <%
                               if (isAdmin) {
                             %>
@@ -74,7 +74,7 @@
         <div class="row gx-0 align-items-center text-center">
             <div class="col-md-4 col-lg-3 text-center text-lg-start">
                 <div class="d-inline-flex align-items-center">
-                    <a href="" class="navbar-brand p-0">
+                    <a href="${pageContext.request.contextPath}/HomeServlet" class="navbar-brand p-0">
                         <h1 class="display-5 text-primary m-0"><i
                                 class="fas fa-shopping-bag text-secondary me-2"></i>AURORA</h1>
                         <!-- <img src="img/logo.png" alt="Logo"> -->
@@ -112,7 +112,7 @@
                 <div class="d-inline-flex align-items-center">
                     <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span
                             class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></a>
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center"><span
+                    <a href="${pageContext.request.contextPath}/CartServlet" class="text-muted d-flex align-items-center justify-content-center"><span
                             class="rounded-circle btn-md-square border"><i class="fas fa-shopping-cart"></i></span>
                         <span class="text-dark ms-2">$0.00</span></a>
                 </div>
