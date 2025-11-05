@@ -122,7 +122,64 @@ public class OrderImpl implements OrderDao {
 
     @Override
     public boolean hasOrdersByUserId(int userId) {
+        String sql = "SELECT 1 FROM `orders` WHERE user_id = ? LIMIT 1";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, userId);
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return false;
+    }
+
+    @Override
+    public List<Order> findByUserId(int id) {
+        List<Order> orderList = new ArrayList<Order>();
+        String sql = "SELECT * FROM `orders` WHERE user_id = ?";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setInt(1, id);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                int orderId = rs.getInt("id");
+                String code = rs.getString("code");
+                Boolean status = rs.getBoolean("status");
+                int user_id = rs.getInt("user_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Timestamp updated_at = rs.getTimestamp("updated_at");
+                orderList.add(new Order(orderId, code, status, user_id, created_at, updated_at));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orderList;
+    }
+
+    @Override
+    public Order finByCode(String code) {
+        String sql = "SELECT * FROM `orders` WHERE code = ? LIMIT 1";
+        try {
+            Connection conn = MySQLDriver.getInstance().getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            stmt.setString(1, code);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int id = rs.getInt("id");
+                String codeVal = rs.getString("code");
+                Boolean status = rs.getBoolean("status");
+                int user_id = rs.getInt("user_id");
+                Timestamp created_at = rs.getTimestamp("created_at");
+                Timestamp updated_at = rs.getTimestamp("updated_at");
+                return new Order(id, codeVal, status, user_id, created_at, updated_at);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
 }

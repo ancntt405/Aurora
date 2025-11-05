@@ -10,4 +10,8 @@ public interface CartDao {
     public boolean delete(int id);
     public Cart find(int id);
     public List<Cart> findAll();
+
+    Cart findByUserAndProduct(int userId, int productId);
+
+    void updateQuantity(int userId, int productId, int i);
 }

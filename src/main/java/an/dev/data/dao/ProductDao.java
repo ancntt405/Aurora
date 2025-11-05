@@ -11,4 +11,14 @@ public interface ProductDao {
     public boolean delete(int id);
     public Product find(int id);
     public List<Product> findAll();
+
+    List<Product> getProducts(int i, int perPage);
+
+    List<Product> findAllByCategoryId(int categoryId);
+
+    List<Product> relatedProductList(Product products);
+
+    void updateView(Product products);
+
+    List<Product> filter(int categoryId, String property, String order);
 }
