@@ -54,6 +54,13 @@
                       </div>
                       </div>
 
+                    <div class="nav-item dropdown">
+                     <a href="${pageContext.request.contextPath}/IndexPerfumeServlet" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-spray-can me-2"></i>Perfumes</a>
+                     <div class="dropdown-menu bg-transparent border-0">
+                          <a href="${pageContext.request.contextPath}/IndexPerfumeServlet" class="dropdown-item">All</a>
+                           <a href="${pageContext.request.contextPath}/CreatePerfumeServlet" class="dropdown-item">Add</a>
+                      </div>
+                      </div>
 
                     <div class="nav-item dropdown">
                      <a href="${pageContext.request.contextPath}/IndexOrderServlet" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-receipt me-2"></i>Orders</a>

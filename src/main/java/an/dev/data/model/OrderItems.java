@@ -6,6 +6,7 @@ public class OrderItems {
     public double price;
     public int order_id;
     public int product_id;
+    private Product products;
 	public OrderItems(int id, int quantity, double price, int order_id, int product_id) {
 		super();
 		this.id = id;
@@ -53,6 +54,14 @@ public class OrderItems {
 
     public void setProduct_id(int product_id) {
         this.product_id = product_id;
+    }
+
+    public Product getProducts() {
+        return products;
+    }
+
+    public void setProducts(Product products) {
+        this.products = products;
     }
 
     public OrderItems() {

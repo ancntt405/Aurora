@@ -4,8 +4,10 @@ import an.dev.admin.BaseAdminServlet;
 import an.dev.data.DatabaseDao;
 import an.dev.data.dao.OrderDao;
 import an.dev.data.dao.OrderItemDao;
+import an.dev.data.dao.ProductDao;
 import an.dev.data.model.Order;
 import an.dev.data.model.OrderItems;
+import an.dev.data.model.Product;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +29,18 @@ public class OrderItemServlet extends BaseAdminServlet {
 
         OrderDao orderDao = DatabaseDao.getInstance().getOrderDao();
         OrderItemDao orderItemDao = DatabaseDao.getInstance().getOrderItem();
+        ProductDao productDao = DatabaseDao.getInstance().getProductDao();
 
         Order order = orderDao.find(orderId);
         List<OrderItems> items = orderItemDao.findByOrderId(orderId);
+
+        // Load product information for each order item
+        if (items != null) {
+            for (OrderItems item : items) {
+                Product product = productDao.find(item.getProduct_id());
+                item.setProducts(product);
+            }
+        }
 
         request.setAttribute("order", order);
         request.setAttribute("items", items);

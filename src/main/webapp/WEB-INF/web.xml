@@ -153,6 +153,26 @@
         <servlet-name>DeleteProductServlet</servlet-name>
         <servlet-class>an.dev.admin.products.DeleteProductServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>CreatePerfumeServlet</servlet-name>
+        <servlet-class>an.dev.admin.perfumes.CreatePerfumeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexPerfumeServlet</servlet-name>
+        <servlet-class>an.dev.admin.perfumes.IndexPerfumeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditPerfumeServlet</servlet-name>
+        <servlet-class>an.dev.admin.perfumes.EditPerfumeServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeletePerfumeServlet</servlet-name>
+        <servlet-class>an.dev.admin.perfumes.DeletePerfumeServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -283,7 +303,35 @@
         <url-pattern>/DeleteProductServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>CreatePerfumeServlet</servlet-name>
+        <url-pattern>/CreatePerfumeServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexPerfumeServlet</servlet-name>
+        <url-pattern>/IndexPerfumeServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditPerfumeServlet</servlet-name>
+        <url-pattern>/EditPerfumeServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeletePerfumeServlet</servlet-name>
+        <url-pattern>/DeletePerfumeServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- Public site servlets -->
+    <servlet>
+        <servlet-name>PerfumeServlet</servlet-name>
+        <servlet-class>an.dev.PerfumeServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>PerfumeDetailServlet</servlet-name>
+        <servlet-class>an.dev.PerfumeDetailServlet</servlet-class>
+    </servlet>
     <servlet>
         <servlet-name>AboutServlet</servlet-name>
         <servlet-class>an.dev.AboutServlet</servlet-class>
@@ -336,6 +384,10 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>an.dev.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>WishlistServlet</servlet-name>
+        <servlet-class>an.dev.WishlistServlet</servlet-class>
+    </servlet>
 
     <!-- Let default servlet serve static resources under /assets/* -->
     <servlet-mapping>
@@ -360,6 +412,14 @@
     </servlet-mapping>
 
     <!-- Public site servlet mappings -->
+    <servlet-mapping>
+        <servlet-name>PerfumeServlet</servlet-name>
+        <url-pattern>/PerfumeServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>PerfumeDetailServlet</servlet-name>
+        <url-pattern>/PerfumeDetailServlet</url-pattern>
+    </servlet-mapping>
     <servlet-mapping>
         <servlet-name>AboutServlet</servlet-name>
         <url-pattern>/AboutServlet</url-pattern>
@@ -415,6 +475,10 @@
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>WishlistServlet</servlet-name>
+        <url-pattern>/WishlistServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Welcome file (trang mặc định) - redirect to HomeServlet -->
