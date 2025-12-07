@@ -87,6 +87,7 @@
                         <div class="navbar-nav ms-auto py-0">
                             <a href="${pageContext.request.contextPath}/HomeServlet" class="nav-item nav-link active">Trang chủ</a>
                             <a href="${pageContext.request.contextPath}/ShopServlet" class="nav-item nav-link">Cửa Hàng</a>
+                            <a href="${pageContext.request.contextPath}/PerfumeServlet" class="nav-item nav-link">Nước Hoa</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trang</a>
                                 <div class="dropdown-menu m-0">
@@ -409,10 +410,10 @@
                                                     class="text-primary d-flex align-items-center justify-content-center me-3"><span
                                                         class="rounded-circle btn-sm-square border"><i
                                                             class="fas fa-random"></i></i></a>
-                                                <a href="#"
-                                                    class="text-primary d-flex align-items-center justify-content-center me-0"><span
+                                                <a href="javascript:void(0)" onclick="toggleWishlist(<%= product.getId() %>, this)"
+                                                    class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span
                                                         class="rounded-circle btn-sm-square border"><i
-                                                            class="fas fa-heart"></i></a>
+                                                            class="far fa-heart"></i></a>
                                             </div>
                                         </div>
                                     </div>
@@ -521,7 +522,7 @@
                       </form>
                       <div class="d-flex">
                         <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></i></a>
-                        <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0"><span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></a>
+                        <a href="javascript:void(0)" onclick="toggleWishlist(<%= bestsellerProduct.getId() %>, this)" class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span class="rounded-circle btn-sm-square border"><i class="far fa-heart"></i></a>
                       </div>
                     </div>
                   </div>
@@ -574,6 +575,9 @@
 
     <!-- Template Javascript -->
     <script src="${pageContext.request.contextPath}/js/main.js"></script>
+    <script src="${pageContext.request.contextPath}/js/wishlist.js"></script>
 </body>
 
 </html>
+<script s
+rc="${pageContext.request.contextPath}/js/wishlist.js"></script>

@@ -381,7 +381,7 @@
                                                 </div>
                                                 <div class="d-flex">
                                                     <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></span></a>
-                                                    <a href="#" class="text-primary d-flex align-items-center justify-content-center me-0"><span class="rounded-circle btn-sm-square border"><i class="fas fa-heart"></i></span></a>
+                                                    <a href="javascript:void(0)" onclick="toggleWishlist(<%= p.getId() %>, this)" class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span class="rounded-circle btn-sm-square border"><i class="far fa-heart"></i></span></a>
                                                 </div>
                                             </div>
                                         </div>
@@ -600,3 +600,7 @@
 </body>
 
 </html>
+<script src
+="${pageContext.request.contextPath}/js/wishlist.js"></script>
+
+<script src="${pageContext.request.contextPath}/js/wishlist.js"></script>

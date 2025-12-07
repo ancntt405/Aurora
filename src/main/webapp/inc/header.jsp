@@ -48,7 +48,7 @@
                             <span class="dropdown-item-text"><strong><%= displayName %></strong></span>
                             <span class="dropdown-item-text text-muted"><%= currentUser.getEmail() %></span>
                             <div class="dropdown-divider"></div>
-                            <a href="#" class="dropdown-item">Danh sách yêu thích</a>
+                            <a href="${pageContext.request.contextPath}/WishlistServlet" class="dropdown-item">Danh sách yêu thích</a>
                             <a href="${pageContext.request.contextPath}/CartServlet" class="dropdown-item">Giỏ hàng của tôi</a>
                             <a href="${pageContext.request.contextPath}/UserServlet" class="dropdown-item">Cài đặt tài khoản</a>
                             <a href="${pageContext.request.contextPath}/ProfileServlet" class="dropdown-item">Tài khoản của tôi</a>
@@ -111,8 +111,16 @@
             </div>
             <div class="col-md-4 col-lg-3 text-center text-lg-end">
                 <div class="d-inline-flex align-items-center">
-                    <a href="#" class="text-muted d-flex align-items-center justify-content-center me-3"><span
-                            class="rounded-circle btn-md-square border"><i class="fas fa-heart"></i></span></a>
+                    <a href="${pageContext.request.contextPath}/WishlistServlet" class="text-muted d-flex align-items-center justify-content-center me-3 position-relative">
+                        <span class="rounded-circle btn-md-square border position-relative">
+                            <i class="fas fa-heart"></i>
+                            <c:set var="wishlistCount" value="${sessionScope.wishlistCount}" />
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger wishlist-count-badge" 
+                                  style="font-size: 10px; ${wishlistCount == null || wishlistCount == 0 ? 'display: none;' : ''}">
+                                ${wishlistCount != null ? wishlistCount : 0}
+                            </span>
+                        </span>
+                    </a>
                     <a href="${pageContext.request.contextPath}/CartServlet" class="text-muted d-flex align-items-center justify-content-center position-relative">
                         <span class="rounded-circle btn-md-square border position-relative">
                             <i class="fas fa-shopping-cart"></i>
