@@ -17,6 +17,8 @@ public class DatabaseDao {
     private final CartDao cartDao;
     private final PerfumeDao perfumeDao;
     private final WishlistDao wishlistDao;
+    private final BlogDao blogDao;
+    private final BlogDetailtDao blogDetailtDao;
 
     private DatabaseDao() {
         categoryDao = new CategoryImpl();
@@ -29,6 +31,8 @@ public class DatabaseDao {
         bannerDao = new BannerImpl();
         perfumeDao = new PerfumeImpl();
         wishlistDao = new WishlistImpl();
+        blogDao = new BlogImpl();
+        blogDetailtDao = new BlogDetailtImpl();
     }
 
     public static synchronized DatabaseDao getInstance() {
@@ -87,5 +91,13 @@ public class DatabaseDao {
 
     public WishlistDao getWishlistDao() {
         return wishlistDao;
+    }
+
+    public BlogDao getBlogDao() {
+        return blogDao;
+    }
+
+    public BlogDetailtDao getBlogDetailtDao() {
+        return blogDetailtDao;
     }
 }
