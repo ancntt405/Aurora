@@ -173,6 +173,31 @@
         <servlet-name>DeletePerfumeServlet</servlet-name>
         <servlet-class>an.dev.admin.perfumes.DeletePerfumeServlet</servlet-class>
     </servlet>
+
+    <servlet>
+        <servlet-name>IndexBlogServlet</servlet-name>
+        <servlet-class>an.dev.admin.blog.IndexBlogServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CreateBlogServlet</servlet-name>
+        <servlet-class>an.dev.admin.blog.CreateBlogServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditBlogServlet</servlet-name>
+        <servlet-class>an.dev.admin.blog.EditBlogServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteBlogServlet</servlet-name>
+        <servlet-class>an.dev.admin.blog.DeleteBlogServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexBlogDetailtServlet</servlet-name>
+        <servlet-class>an.dev.admin.blog.IndexBlogDetailtServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
         <url-pattern>/</url-pattern>
@@ -321,6 +346,31 @@
     <servlet-mapping>
         <servlet-name>DeletePerfumeServlet</servlet-name>
         <url-pattern>/DeletePerfumeServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexBlogServlet</servlet-name>
+        <url-pattern>/IndexBlogServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>CreateBlogServlet</servlet-name>
+        <url-pattern>/CreateBlogServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditBlogServlet</servlet-name>
+        <url-pattern>/EditBlogServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteBlogServlet</servlet-name>
+        <url-pattern>/DeleteBlogServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>IndexBlogDetailtServlet</servlet-name>
+        <url-pattern>/IndexBlogDetailtServlet</url-pattern>
     </servlet-mapping>
 
     <!-- Public site servlets -->
