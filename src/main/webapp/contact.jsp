@@ -166,48 +166,57 @@
                     <div class="col-lg-7 form-col">
                         <h5 class="text-primary wow fadeInUp" data-wow-delay="0.1s">Kết nối với chúng tôi</h5>
                         <h1 class="display-5 mb-4 wow fadeInUp" data-wow-delay="0.3s">Gửi tin nhắn của bạn</h1>
-                        <p class="mb-4 wow fadeInUp" data-wow-delay="0.5s">Biểu mẫu liên hệ hiện chưa được kích hoạt. Vui lòng liên hệ trực tiếp qua địa chỉ, email hoặc số điện thoại bên cạnh.</p>
-                        <form>
+                        
+                        <% if (request.getAttribute("success") != null) { %>
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <i class="fas fa-check-circle me-2"></i><%= request.getAttribute("success") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <% } %>
+                        
+                        <% if (request.getAttribute("error") != null) { %>
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="fas fa-exclamation-circle me-2"></i><%= request.getAttribute("error") %>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                            </div>
+                        <% } %>
+                        
+                        <p class="mb-4 wow fadeInUp" data-wow-delay="0.5s">Điền thông tin vào form bên dưới để gửi tin nhắn cho chúng tôi. Chúng tôi sẽ phản hồi sớm nhất có thể!</p>
+                        <form method="post" action="${pageContext.request.contextPath}/ContactServlet">
                             <div class="row g-4 wow fadeInUp" data-wow-delay="0.1s">
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="name" placeholder="Họ và tên">
-                                        <label for="name">Họ và tên</label>
+                                        <input type="text" class="form-control" id="name" name="name" placeholder="Họ và tên" required>
+                                        <label for="name">Họ và tên *</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
-                                        <input type="email" class="form-control" id="email" placeholder="Email">
-                                        <label for="email">Email</label>
+                                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+                                        <label for="email">Email *</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
-                                        <input type="phone" class="form-control" id="phone" placeholder="Số điện thoại">
+                                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Số điện thoại">
                                         <label for="phone">Số điện thoại</label>
                                     </div>
                                 </div>
                                 <div class="col-lg-12 col-xl-6">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="project" placeholder="Chủ đề">
-                                        <label for="project">Chủ đề</label>
+                                        <input type="text" class="form-control" id="subject" name="subject" placeholder="Chủ đề" required>
+                                        <label for="subject">Chủ đề *</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <input type="text" class="form-control" id="subject" placeholder="Tiêu đề">
-                                        <label for="subject">Tiêu đề</label>
+                                        <textarea class="form-control" placeholder="Nhập nội dung tại đây" id="message" name="message"
+                                            style="height: 160px" required></textarea>
+                                        <label for="message">Nội dung *</label>
                                     </div>
                                 </div>
                                 <div class="col-12">
-                                    <div class="form-floating">
-                                        <textarea class="form-control" placeholder="Nhập nội dung tại đây" id="message"
-                                            style="height: 160px"></textarea>
-                                        <label for="message">Nội dung</label>
-                                    </div>
-                                </div>
-                                <div class="col-12">
-                                    <button class="btn btn-primary w-100 py-3">Gửi tin nhắn</button>
+                                    <button type="submit" class="btn btn-primary w-100 py-3">Gửi tin nhắn</button>
                                 </div>
                             </div>
                         </form>

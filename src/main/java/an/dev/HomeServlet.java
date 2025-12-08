@@ -8,6 +8,9 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import an.dev.data.model.Product;
+import an.dev.data.model.Blog;
+import an.dev.data.DatabaseDao;
+import an.dev.data.dao.BlogDao;
 
 public class HomeServlet extends BaseServlet{
     @Override
@@ -50,6 +53,20 @@ public class HomeServlet extends BaseServlet{
                 // nếu tham số không hợp lệ thì bỏ qua, hiển thị tất cả
             }
         }
+        
+        // Load danh sách blog để hiển thị ở trang chủ (lấy 3 bài mới nhất)
+        try {
+            BlogDao blogDao = DatabaseDao.getInstance().getBlogDao();
+            List<Blog> allBlogs = blogDao.findAll();
+            if (allBlogs != null && !allBlogs.isEmpty()) {
+                int limit = Math.min(3, allBlogs.size());
+                request.setAttribute("latestBlogs", allBlogs.subList(0, limit));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            // Nếu có lỗi, không hiển thị blog
+        }
+        
         request.getRequestDispatcher("/index.jsp").forward(request, response);
     }
     @Override

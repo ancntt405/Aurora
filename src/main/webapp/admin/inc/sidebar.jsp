@@ -77,6 +77,21 @@
                       </div>
                       </div>
 
+                    <div class="nav-item dropdown">
+                     <a href="${pageContext.request.contextPath}/IndexBlogDetailtServlet" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-file-alt me-2"></i>Blog Details</a>
+                     <div class="dropdown-menu bg-transparent border-0">
+                          <a href="${pageContext.request.contextPath}/IndexBlogDetailtServlet" class="dropdown-item">All</a>
+                           <a href="${pageContext.request.contextPath}/CreateBlogDetailtServlet" class="dropdown-item">Add</a>
+                      </div>
+                      </div>
+
+                    <div class="nav-item dropdown">
+                     <a href="${pageContext.request.contextPath}/IndexContactServlet" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-envelope me-2"></i>Contact</a>
+                     <div class="dropdown-menu bg-transparent border-0">
+                          <a href="${pageContext.request.contextPath}/IndexContactServlet" class="dropdown-item">All Messages</a>
+                      </div>
+                      </div>
+
 
                 </div>
             </nav>
