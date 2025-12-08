@@ -19,6 +19,7 @@ public class DatabaseDao {
     private final WishlistDao wishlistDao;
     private final BlogDao blogDao;
     private final BlogDetailtDao blogDetailtDao;
+    private final ContactDao contactDao;
 
     private DatabaseDao() {
         categoryDao = new CategoryImpl();
@@ -33,6 +34,7 @@ public class DatabaseDao {
         wishlistDao = new WishlistImpl();
         blogDao = new BlogImpl();
         blogDetailtDao = new BlogDetailtImpl();
+        contactDao = new ContactImpl();
     }
 
     public static synchronized DatabaseDao getInstance() {
@@ -99,5 +101,9 @@ public class DatabaseDao {
 
     public BlogDetailtDao getBlogDetailtDao() {
         return blogDetailtDao;
+    }
+
+    public ContactDao getContactDao() {
+        return contactDao;
     }
 }

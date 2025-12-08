@@ -57,12 +57,12 @@ public class UserImpl implements UserDao{
 			stmt.setTimestamp(7, user.updated_at);
 			stmt.setString(8, user.role);
 			stmt.setString(9, user.name);
-			stmt.execute();
+			stmt.setInt(10, user.id);  // Thêm parameter thứ 10
+			return stmt.executeUpdate() > 0;
 		}catch(SQLException e) {
 			e.printStackTrace();
 			return false;
 		}
-		return true;
 	}
 
 	@Override

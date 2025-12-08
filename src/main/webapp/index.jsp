@@ -87,7 +87,6 @@
                         <div class="navbar-nav ms-auto py-0">
                             <a href="${pageContext.request.contextPath}/HomeServlet" class="nav-item nav-link active">Trang chủ</a>
                             <a href="${pageContext.request.contextPath}/ShopServlet" class="nav-item nav-link">Cửa Hàng</a>
-                            <a href="${pageContext.request.contextPath}/PerfumeServlet" class="nav-item nav-link">Nước Hoa</a>
                             <div class="nav-item dropdown">
                                 <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Trang</a>
                                 <div class="dropdown-menu m-0">
@@ -409,11 +408,11 @@
                                                 <a href="#"
                                                     class="text-primary d-flex align-items-center justify-content-center me-3"><span
                                                         class="rounded-circle btn-sm-square border"><i
-                                                            class="fas fa-random"></i></i></a>
+                                                            class="fas fa-random"></i></span></a>
                                                 <a href="javascript:void(0)" onclick="toggleWishlist(<%= product.getId() %>, this)"
                                                     class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span
                                                         class="rounded-circle btn-sm-square border"><i
-                                                            class="far fa-heart"></i></a>
+                                                            class="far fa-heart"></i></span></a>
                                             </div>
                                         </div>
                                     </div>
@@ -521,8 +520,8 @@
                         <button type="submit" class="btn btn-primary border-secondary rounded-pill py-2 px-4"><i class="fas fa-shopping-cart me-2"></i> Thêm vào giỏ hàng</button>
                       </form>
                       <div class="d-flex">
-                        <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></i></a>
-                        <a href="javascript:void(0)" onclick="toggleWishlist(<%= bestsellerProduct.getId() %>, this)" class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span class="rounded-circle btn-sm-square border"><i class="far fa-heart"></i></a>
+                        <a href="#" class="text-primary d-flex align-items-center justify-content-center me-3"><span class="rounded-circle btn-sm-square border"><i class="fas fa-random"></i></span></a>
+                        <a href="javascript:void(0)" onclick="toggleWishlist(<%= bestsellerProduct.getId() %>, this)" class="text-muted d-flex align-items-center justify-content-center me-0 wishlist-btn"><span class="rounded-circle btn-sm-square border"><i class="far fa-heart"></i></span></a>
                       </div>
                     </div>
                   </div>
@@ -540,6 +539,70 @@
     </div>
     <!-- Bestseller Products End -->
 
+    <!-- Blog Section Start -->
+    <div class="container-fluid blog py-5">
+        <div class="container py-5">
+            <div class="mx-auto text-center mb-5" style="max-width: 700px;">
+                <h4 class="text-primary mb-4 border-bottom border-primary border-2 d-inline-block p-2 title-border-radius wow fadeInUp"
+                    data-wow-delay="0.1s">Bài viết mới nhất</h4>
+                <p class="mb-0">Khám phá những bài viết thú vị về nước hoa và làm đẹp</p>
+            </div>
+            <div class="row g-4">
+                <%
+                  java.util.List<an.dev.data.model.Blog> latestBlogs =
+                    (java.util.List<an.dev.data.model.Blog>) request.getAttribute("latestBlogs");
+                  
+                  if (latestBlogs != null && !latestBlogs.isEmpty()) {
+                    for (an.dev.data.model.Blog blog : latestBlogs) {
+                %>
+                <div class="col-md-6 col-lg-4 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="blog-item border rounded overflow-hidden">
+                        <div class="blog-img position-relative overflow-hidden">
+                            <%
+                              String blogImgVal = blog.getImage_url();
+                              String blogImgSrc;
+                              if (blogImgVal != null && blogImgVal.startsWith("http")) {
+                                blogImgSrc = blogImgVal;
+                              } else if (blogImgVal != null && (blogImgVal.startsWith("img/") || blogImgVal.startsWith("assets/"))) {
+                                blogImgSrc = request.getContextPath() + "/" + blogImgVal;
+                              } else {
+                                blogImgSrc = request.getContextPath() + "/img/" + (blogImgVal != null ? blogImgVal : "blog-default.jpg");
+                              }
+                            %>
+                            <img src="<%= blogImgSrc %>" 
+                                 onerror="this.onerror=null; this.src='<%= request.getContextPath() %>/img/blog-1.jpg';" 
+                                 class="img-fluid w-100" 
+                                 alt="<%= blog.getTitle() %>" 
+                                 style="height: 250px; object-fit: cover;">
+                        </div>
+                        <div class="p-4">
+                            <a href="${pageContext.request.contextPath}/BlogServlet?blogId=<%= blog.getId() %>" 
+                               class="d-block h5 mb-3 text-dark"><%= blog.getTitle() %></a>
+                            <p class="mb-3"><%= blog.getDescription() %></p>
+                            <a href="${pageContext.request.contextPath}/BlogServlet?blogId=<%= blog.getId() %>" 
+                               class="btn btn-primary rounded-pill py-2 px-4">
+                                Đọc thêm <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <%
+                    }
+                  } else {
+                %>
+                  <div class="text-center w-100"><p>Chưa có bài viết nào.</p></div>
+                <%
+                  }
+                %>
+            </div>
+            <div class="text-center mt-5">
+                <a href="${pageContext.request.contextPath}/BlogServlet" class="btn btn-outline-primary rounded-pill py-3 px-5">
+                    Xem tất cả bài viết <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- Blog Section End -->
 
     <%@include file='./inc/footer.jsp' %>
 

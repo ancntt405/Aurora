@@ -1,8 +1,7 @@
-package an.dev.admin.blog;
+package an.dev.admin.blogdetailt;
 
 import an.dev.admin.BaseAdminServlet;
 import an.dev.data.DatabaseDao;
-import an.dev.data.dao.BlogDao;
 import an.dev.data.dao.BlogDetailtDao;
 
 import javax.servlet.ServletException;
@@ -10,20 +9,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class DeleteBlogServlet extends BaseAdminServlet {
+public class DeleteBlogDetailtServlet extends BaseAdminServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int blogId = Integer.parseInt(request.getParameter("blogId"));
+        int id = Integer.parseInt(request.getParameter("id"));
         
-      
         BlogDetailtDao blogDetailtDao = DatabaseDao.getInstance().getBlogDetailtDao();
-        blogDetailtDao.deleteByBlogId(blogId);
-       
-        BlogDao blogDao = DatabaseDao.getInstance().getBlogDao();
-        blogDao.delete(blogId);
+        blogDetailtDao.delete(id);
         
-        response.sendRedirect("IndexBlogServlet");
+        response.sendRedirect("IndexBlogDetailtServlet");
     }
 
     @Override

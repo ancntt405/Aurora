@@ -196,7 +196,37 @@
 
     <servlet>
         <servlet-name>IndexBlogDetailtServlet</servlet-name>
-        <servlet-class>an.dev.admin.blog.IndexBlogDetailtServlet</servlet-class>
+        <servlet-class>an.dev.admin.blogdetailt.IndexBlogDetailtServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>CreateBlogDetailtServlet</servlet-name>
+        <servlet-class>an.dev.admin.blogdetailt.CreateBlogDetailtServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>EditBlogDetailtServlet</servlet-name>
+        <servlet-class>an.dev.admin.blogdetailt.EditBlogDetailtServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteBlogDetailtServlet</servlet-name>
+        <servlet-class>an.dev.admin.blogdetailt.DeleteBlogDetailtServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>IndexContactServlet</servlet-name>
+        <servlet-class>an.dev.admin.contact.IndexContactServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>ViewContactServlet</servlet-name>
+        <servlet-class>an.dev.admin.contact.ViewContactServlet</servlet-class>
+    </servlet>
+
+    <servlet>
+        <servlet-name>DeleteContactServlet</servlet-name>
+        <servlet-class>an.dev.admin.contact.DeleteContactServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>HomeServlet</servlet-name>
@@ -373,6 +403,21 @@
         <url-pattern>/IndexBlogDetailtServlet</url-pattern>
     </servlet-mapping>
 
+    <servlet-mapping>
+        <servlet-name>CreateBlogDetailtServlet</servlet-name>
+        <url-pattern>/CreateBlogDetailtServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>EditBlogDetailtServlet</servlet-name>
+        <url-pattern>/EditBlogDetailtServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteBlogDetailtServlet</servlet-name>
+        <url-pattern>/DeleteBlogDetailtServlet</url-pattern>
+    </servlet-mapping>
+
     <!-- Public site servlets -->
     <servlet>
         <servlet-name>PerfumeServlet</servlet-name>
@@ -530,9 +575,24 @@
         <servlet-name>WishlistServlet</servlet-name>
         <url-pattern>/WishlistServlet</url-pattern>
     </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>IndexContactServlet</servlet-name>
+        <url-pattern>/IndexContactServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>ViewContactServlet</servlet-name>
+        <url-pattern>/ViewContactServlet</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>DeleteContactServlet</servlet-name>
+        <url-pattern>/DeleteContactServlet</url-pattern>
+    </servlet-mapping>
 
     <!-- Welcome file (trang mặc định) - redirect to HomeServlet -->
     <welcome-file-list>
         <welcome-file>HomeServlet</welcome-file>
     </welcome-file-list>
 </web-app>
+
